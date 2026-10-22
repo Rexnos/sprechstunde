@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+!.env.example
+!.env.docker.example
+
+# local AI assets, Python env, user data — never commit
+/python/speech-service/.venv/
+/python/speech-service/models/
+/python/speech-service/voices/
+__pycache__/
+/data/
+/backups/
+*.wav
+*.webm

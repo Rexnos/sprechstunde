@@ -1,0 +1,6 @@
+.venv
+models
+voices
+__pycache__
+*.pyc
+*.log

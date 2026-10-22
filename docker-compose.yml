@@ -1,0 +1,88 @@
+# Local AI German tutor: everything runs on this machine.
+# Easiest: scripts/docker-up.ps1 (Windows) or scripts/docker-up.sh (macOS/Linux), which pick
+# the right setup for this device. Manually, combine this file with one add-on:
+#   any device, CPU only:     docker compose up -d --build
+#   NVIDIA GPU (Win/Linux):   docker compose -f docker-compose.yml -f docker-compose.nvidia.yml up -d --build
+#   AMD GPU (Linux, ROCm):    docker compose -f docker-compose.yml -f docker-compose.amd.yml up -d --build
+#   Ollama app on the host    docker compose -f docker-compose.yml -f docker-compose.host-ollama.yml up -d --build
+#   (Mac with Apple Silicon, AMD/Intel GPU on Windows)
+# Only the web app is published, and only on 127.0.0.1. Everything else stays on the
+# private compose network.
+name: language-tutor
+
+services:
+  mongo:
+    image: mongo:8.0
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  ollama:
+    image: ollama/ollama:${OLLAMA_IMAGE_TAG:-latest}
+    restart: unless-stopped
+    environment:
+      OLLAMA_KEEP_ALIVE: 15m
+    volumes:
+      - ollama-models:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  # One-shot: downloads the model on first start (skipped if already present, so it also works offline).
+  ollama-init:
+    image: ollama/ollama:${OLLAMA_IMAGE_TAG:-latest}
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_HOST: ollama:11434
+      MODEL: ${OLLAMA_MODEL:-qwen3.5:4b}
+    entrypoint: ["/bin/sh", "-c"]
+    command: ['ollama list | grep -q "^$${MODEL}" && echo "Model $${MODEL} already present." || ollama pull "$${MODEL}"']
+    restart: "no"
+
+  speech:
+    build:
+      context: ./python/speech-service
+      args:
+        WHISPER_MODEL: ${WHISPER_MODEL:-small}
+    restart: unless-stopped
+    environment:
+      WHISPER_DEVICE: auto
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
+      speech:
+        condition: service_healthy
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/local_language_tutor
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3.5:4b}
+      OLLAMA_TIMEOUT_MS: 120000
+      SPEECH_SERVICE_URL: http://speech:8001
+      SPEECH_TIMEOUT_MS: 60000
+      TTS_MODE: piper
+    ports:
+      - "127.0.0.1:${APP_PORT:-3000}:3000"
+    # Lets the app reach an Ollama running on the host (docker-compose.host-ollama.yml).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  mongo-data:
+  ollama-models:

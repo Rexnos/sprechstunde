@@ -1,0 +1,4 @@
+# Shell scripts and Dockerfiles run inside Linux/macOS: always LF line endings.
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.yml text eol=lf

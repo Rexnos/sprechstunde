@@ -1,0 +1,7 @@
+fastapi>=0.115
+uvicorn>=0.30
+python-multipart>=0.0.9
+faster-whisper>=1.1
+# faster-whisper 1.2 passes metadata_errors to av.open(), which PyAV 16+ removed.
+av>=12,<16
+piper-tts>=1.3

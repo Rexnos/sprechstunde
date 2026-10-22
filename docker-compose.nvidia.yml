@@ -1,0 +1,22 @@
+# NVIDIA GPU for the AI model and speech recognition (Windows via Docker Desktop + WSL2,
+# or Linux with the NVIDIA Container Toolkit).
+services:
+  ollama:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+  speech:
+    build:
+      args:
+        ACCEL: cuda
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

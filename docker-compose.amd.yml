@@ -1,0 +1,14 @@
+# AMD GPU (ROCm) for the AI model. Linux only: Docker on Windows/macOS can't pass AMD GPUs
+# through; use docker-compose.host-ollama.yml with the native Ollama app there instead.
+# Speech recognition stays on the CPU (faster-whisper has no ROCm build).
+services:
+  ollama:
+    image: ollama/ollama:${OLLAMA_ROCM_TAG:-rocm}
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    group_add:
+      - video
+      - render
+  ollama-init:
+    image: ollama/ollama:${OLLAMA_ROCM_TAG:-rocm}

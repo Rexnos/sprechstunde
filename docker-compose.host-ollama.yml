@@ -1,0 +1,19 @@
+# Use an Ollama app installed on the host instead of the bundled container. Best on:
+#   - Macs with Apple Silicon (Docker can't use the Metal GPU, native Ollama can)
+#   - Windows PCs with AMD or Intel GPUs (native Ollama supports them, Docker doesn't)
+# Install Ollama from https://ollama.com, then: ollama pull <model>.
+# Linux: Ollama listens on 127.0.0.1 by default, which containers can't reach. Start it with
+#   OLLAMA_HOST=172.17.0.1:11434 (Docker's bridge address) so only containers can reach it.
+services:
+  ollama:
+    profiles: ["bundled-ollama"] # not started
+  ollama-init:
+    profiles: ["bundled-ollama"] # not started
+  app:
+    environment:
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+    depends_on: !override
+      mongo:
+        condition: service_healthy
+      speech:
+        condition: service_healthy

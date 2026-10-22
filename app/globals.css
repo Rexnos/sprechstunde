@@ -1,26 +1,211 @@
 @import "tailwindcss";
 
+/*
+  Sprechstunde design tokens.
+  Scene: an adult practising German aloud at a desk in the evening, under a warm lamp,
+  a little self-conscious. Warm paper neutrals, one vermilion accent reserved for the
+  act of speaking (mic, primary action). No web fonts: Segoe UI Variable ships with
+  Windows 11, so the app stays fully offline.
+*/
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --bg: oklch(0.975 0.008 75);
+  --surface: oklch(0.993 0.004 75);
+  --surface-2: oklch(0.945 0.011 75);
+  --border: oklch(0.885 0.014 70);
+  --ink: oklch(0.24 0.018 50);
+  --muted: oklch(0.5 0.018 55);
+  --accent: oklch(0.575 0.175 33);
+  --accent-ink: oklch(0.985 0.01 60);
+  --accent-soft: oklch(0.93 0.04 40);
+  --warn: oklch(0.52 0.12 70);
+  --warn-soft: oklch(0.95 0.045 85);
+  --danger: oklch(0.52 0.19 27);
+  --danger-soft: oklch(0.95 0.03 25);
+  --ok: oklch(0.52 0.12 150);
+  --ok-soft: oklch(0.95 0.04 150);
+  --tutor: oklch(0.993 0.004 75);
+  --learner: oklch(0.29 0.02 50);
+  --learner-ink: oklch(0.97 0.008 75);
+  --ease-out: cubic-bezier(0.25, 1, 0.5, 1); /* quart */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: oklch(0.2 0.01 50);
+    --surface: oklch(0.235 0.012 50);
+    --surface-2: oklch(0.275 0.013 50);
+    --border: oklch(0.34 0.014 50);
+    --ink: oklch(0.93 0.01 70);
+    --muted: oklch(0.7 0.014 65);
+    --accent: oklch(0.7 0.15 38);
+    --accent-ink: oklch(0.2 0.02 40);
+    --accent-soft: oklch(0.32 0.06 38);
+    --warn: oklch(0.8 0.11 80);
+    --warn-soft: oklch(0.31 0.045 75);
+    --danger: oklch(0.74 0.14 25);
+    --danger-soft: oklch(0.3 0.06 25);
+    --ok: oklch(0.78 0.12 150);
+    --ok-soft: oklch(0.3 0.05 150);
+    --tutor: oklch(0.255 0.012 50);
+    --learner: oklch(0.88 0.015 70);
+    --learner-ink: oklch(0.22 0.015 50);
   }
 }
 
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-warn: var(--warn);
+  --color-warn-soft: var(--warn-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --color-tutor: var(--tutor);
+  --color-learner: var(--learner);
+  --color-learner-ink: var(--learner-ink);
+  --font-sans: "Segoe UI Variable Text", "Segoe UI", ui-sans-serif, system-ui, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Segoe UI Variable Display", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --ease-out-quart: var(--ease-out);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+/* ---------- motion ---------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-rise {
+  animation: rise 280ms var(--ease-out) both;
+}
+
+.dot-breathe > span {
+  animation: breathe 1.2s ease-in-out infinite;
+}
+.dot-breathe > span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.dot-breathe > span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes swell {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: scale(1.12);
+    opacity: 0.25;
+  }
+}
+
+.animate-swell {
+  animation: swell 1.6s var(--ease-out) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.caret::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- primitives ---------- */
+
+@utility card {
+  @apply rounded-2xl border border-border bg-surface p-5;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-[background-color,color,opacity,transform] duration-150 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-45 disabled:active:scale-100;
+}
+@utility btn-primary {
+  @apply btn bg-accent text-accent-ink hover:brightness-105;
+}
+@utility btn-secondary {
+  @apply btn border border-border bg-surface text-ink hover:bg-surface-2;
+}
+@utility btn-ghost {
+  @apply btn text-muted hover:bg-surface-2 hover:text-ink;
+}
+@utility btn-danger {
+  @apply btn border border-danger/40 bg-danger-soft text-danger hover:brightness-95;
+}
+@utility input {
+  @apply w-full rounded-xl border border-border bg-surface px-3 py-2 text-ink transition-colors placeholder:text-muted focus:border-accent/60;
+}
+@utility label {
+  @apply mb-1 block text-sm font-medium;
+}
+@utility eyebrow {
+  @apply text-xs font-semibold tracking-wider text-muted uppercase;
 }
