@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookIcon, CardsIcon, ChartIcon, ChatIcon, GearIcon, HeadphonesIcon, HomeIcon, PeopleIcon, PulseIcon } from "@/components/ui/icons";
+import { BookIcon, CardsIcon, ChartIcon, ChatIcon, DictionaryIcon, GearIcon, HeadphonesIcon, HomeIcon, PeopleIcon, PulseIcon } from "@/components/ui/icons";
 
 const LINKS = [
   { href: "/dashboard", label: "Home", Icon: HomeIcon },
@@ -11,6 +11,7 @@ const LINKS = [
   { href: "/tutor", label: "Tutor", Icon: ChatIcon },
   { href: "/lessons", label: "Role-plays", Icon: PeopleIcon },
   { href: "/vocabulary", label: "Vocabulary", Icon: CardsIcon },
+  { href: "/dictionary", label: "Dictionary", Icon: DictionaryIcon },
   { href: "/progress", label: "Progress", Icon: ChartIcon },
   { href: "/settings", label: "Settings", Icon: GearIcon },
   { href: "/status", label: "Status", Icon: PulseIcon },

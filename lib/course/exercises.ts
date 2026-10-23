@@ -21,7 +21,7 @@ export function rng(seed: number) {
   };
 }
 
-function shuffle<T>(items: T[], rand: () => number): T[] {
+export function shuffle<T>(items: T[], rand: () => number): T[] {
   const a = [...items];
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(rand() * (i + 1));
@@ -37,6 +37,54 @@ function pickDistractors(correct: string, pool: string[], n: number, rand: () =>
 
 const wordsOf = (s: string) => s.split(/\s+/).filter(Boolean);
 const bare = (w: string) => w.replace(/[.,!?;:„“"…]/g, "");
+const gapCandidatesOf = (words: string[]) => (words.length >= 2 ? words.map(bare).filter((w) => w.length >= 3) : []);
+
+type PhraseKind = "meaning" | "listen" | "build" | "gap";
+
+/** The phrase exercise kinds that work for this phrase (build needs 3–9 words, gap a word to blank). */
+export function kindsFor(phrase: Phrase): PhraseKind[] {
+  const words = wordsOf(phrase.de);
+  const kinds: PhraseKind[] = ["meaning", "listen"];
+  if (words.length >= 3 && words.length <= 9) kinds.push("build");
+  if (gapCandidatesOf(words).length > 0) kinds.push("gap");
+  return kinds;
+}
+
+/** One exercise of the given kind for a phrase, with distractors from `pool`. Check `kindsFor` first. */
+export function makeExercise(kind: PhraseKind, phrase: Phrase, pool: Phrase[], rand: () => number): Exercise {
+  const id = `${phrase.id}:${kind}`;
+  const words = wordsOf(phrase.de);
+  if (kind === "meaning") {
+    const options = shuffle([phrase.en, ...pickDistractors(phrase.en, pool.map((p) => p.en), 3, rand)], rand);
+    return { kind, id, phrase, prompt: phrase.de, options, answer: phrase.en };
+  }
+  if (kind === "listen") {
+    const options = shuffle([phrase.de, ...pickDistractors(phrase.de, pool.map((p) => p.de), 3, rand)], rand);
+    return { kind, id, phrase, options, answer: phrase.de };
+  }
+  if (kind === "build") {
+    let tiles = shuffle(words, rand);
+    if (tiles.join(" ") === words.join(" ")) tiles = [...tiles.slice(1), tiles[0]];
+    return { kind, id, phrase, tiles, answer: words.join(" ") };
+  }
+  const gapCandidates = gapCandidatesOf(words);
+  const target = gapCandidates[Math.floor(rand() * gapCandidates.length)];
+  const pos = words.findIndex((w) => bare(w) === target);
+  const allWords = pool.flatMap((p) => wordsOf(p.de).map(bare)).filter((w) => w.length >= 2);
+  const options = shuffle([target, ...pickDistractors(target, allWords, 3, rand)], rand);
+  const w = words[pos];
+  const at = w.indexOf(target);
+  const rest = words.slice(pos + 1).join(" ");
+  return {
+    kind,
+    id,
+    phrase,
+    before: [...words.slice(0, pos), w.slice(0, at)].join(" ").trim(),
+    after: `${w.slice(at + target.length)}${rest ? ` ${rest}` : ""}`.trim(),
+    options,
+    answer: target,
+  };
+}
 
 /**
  * Builds a practice set from a lesson: one or two exercises per phrase, mixing
@@ -49,47 +97,11 @@ export function buildExercises(lesson: CourseLesson, unit: Unit, seed = 1): Exer
   const out: Exercise[] = [];
 
   lesson.phrases.forEach((phrase, idx) => {
-    const words = wordsOf(phrase.de);
-    const kinds: Exercise["kind"][] = ["meaning", "listen"];
-    if (words.length >= 3 && words.length <= 9) kinds.push("build");
-    const gapCandidates = words.length >= 2 ? words.map(bare).filter((w) => w.length >= 3) : [];
-    if (gapCandidates.length > 0) kinds.push("gap");
-
+    const kinds = kindsFor(phrase);
     // Rotate through kinds so the set feels varied; long lessons get one per phrase.
     const chosen = [kinds[idx % kinds.length]];
     if (lesson.phrases.length <= 6 && !lesson.letters) chosen.push(kinds[(idx + 2) % kinds.length]);
-
-    for (const kind of [...new Set(chosen)]) {
-      const id = `${phrase.id}:${kind}`;
-      if (kind === "meaning") {
-        const options = shuffle([phrase.en, ...pickDistractors(phrase.en, pool.map((p) => p.en), 3, rand)], rand);
-        out.push({ kind, id, phrase, prompt: phrase.de, options, answer: phrase.en });
-      } else if (kind === "listen") {
-        const options = shuffle([phrase.de, ...pickDistractors(phrase.de, pool.map((p) => p.de), 3, rand)], rand);
-        out.push({ kind, id, phrase, options, answer: phrase.de });
-      } else if (kind === "build") {
-        let tiles = shuffle(words, rand);
-        if (tiles.join(" ") === words.join(" ")) tiles = [...tiles.slice(1), tiles[0]];
-        out.push({ kind, id, phrase, tiles, answer: words.join(" ") });
-      } else {
-        const target = gapCandidates[Math.floor(rand() * gapCandidates.length)];
-        const pos = words.findIndex((w) => bare(w) === target);
-        const allWords = pool.flatMap((p) => wordsOf(p.de).map(bare)).filter((w) => w.length >= 2);
-        const options = shuffle([target, ...pickDistractors(target, allWords, 3, rand)], rand);
-        const w = words[pos];
-        const at = w.indexOf(target);
-        const rest = words.slice(pos + 1).join(" ");
-        out.push({
-          kind,
-          id,
-          phrase,
-          before: [...words.slice(0, pos), w.slice(0, at)].join(" ").trim(),
-          after: `${w.slice(at + target.length)}${rest ? ` ${rest}` : ""}`.trim(),
-          options,
-          answer: target,
-        });
-      }
-    }
+    for (const kind of [...new Set(chosen)]) out.push(makeExercise(kind, phrase, pool, rand));
   });
 
   // Alphabet: hear a letter name, pick the letter.

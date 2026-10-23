@@ -55,6 +55,9 @@ async function ensureIndexes(db: Db) {
     db.collection("course_progress").createIndex({ profileId: 1, lessonId: 1 }, { unique: true }),
     db.collection("practice_results").createIndex({ profileId: 1, kind: 1, at: -1 }),
     db.collection("generated_content").createIndex({ profileId: 1, kind: 1, createdAt: -1 }),
+    db.collection("checkups").createIndex({ profileId: 1, takenAt: -1 }),
+    // Shared Wiktionary data loaded by scripts/import-dictionary.ts (keep the two lists in step).
+    ...["key", "fold", "formKeys", "en1", "enKeys"].map((field) => db.collection("dictionary").createIndex({ [field]: 1 })),
   ]);
 }
 

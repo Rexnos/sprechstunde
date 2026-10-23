@@ -5,6 +5,7 @@ import { ErrorBanner, Loading, Notice } from "@/components/ui/Feedback";
 import { formatRelative } from "@/lib/client";
 import { getLesson, MODE_LABELS } from "@/lib/lessons";
 import { ActivityChart } from "./ActivityChart";
+import { CheckupHistory } from "./CheckupHistory";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/client";
 import { getCourseLesson } from "@/lib/course";
@@ -31,6 +32,8 @@ export function ProgressView() {
 
       <CourseSummary />
       <PracticeSummary />
+
+      <CheckupHistory />
 
       <section className="card" aria-labelledby="activity-h">
         <h2 id="activity-h" className="mb-4 font-semibold">

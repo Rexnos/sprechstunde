@@ -26,6 +26,9 @@ export const BookIcon = (p: P) => (
 export const CardsIcon = (p: P) => (
   <svg {...base(p)}><rect x="3" y="6" width="14" height="14" rx="2" /><path d="M7 3h12a2 2 0 0 1 2 2v12" /></svg>
 );
+export const DictionaryIcon = (p: P) => (
+  <svg {...base(p)}><circle cx="10.5" cy="10.5" r="6.5" /><path d="m20 20-4.9-4.9M8 10.5h5" /></svg>
+);
 export const ChartIcon = (p: P) => (
   <svg {...base(p)}><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>
 );

@@ -8,7 +8,7 @@ import { MicIcon } from "@/components/ui/icons";
 import { api, formatRelative } from "@/lib/client";
 import { LESSONS } from "@/lib/lessons";
 import { getCourseLesson } from "@/lib/course";
-import { CEFR_LEVELS, type CourseProgressDTO, type Settings, type VocabDTO } from "@/lib/schemas";
+import { CEFR_LEVELS, type CheckupStatusDTO, type CourseProgressDTO, type Settings, type VocabDTO } from "@/lib/schemas";
 import { useProgress } from "./useProgress";
 
 function greeting(hour: number) {
@@ -24,6 +24,7 @@ export function Dashboard() {
   const [due, setDue] = useState<VocabDTO[]>([]);
   const [course, setCourse] = useState<CourseProgressDTO | null>(null);
   const [hour, setHour] = useState<number | null>(null);
+  const [checkup, setCheckup] = useState<CheckupStatusDTO | null>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- client clock, avoids hydration mismatch
@@ -36,6 +37,9 @@ export function Dashboard() {
       .catch(() => {});
     api<{ items: VocabDTO[] }>("/api/vocabulary?due=1&limit=6")
       .then((r) => setDue(r.items))
+      .catch(() => {});
+    api<CheckupStatusDTO>("/api/checkup")
+      .then(setCheckup)
       .catch(() => {});
   }, []);
 
@@ -97,6 +101,9 @@ export function Dashboard() {
 
       {/* Beginner course */}
       {course?.nextLessonId && <CourseCard course={course} isNew={data.totals.sessions === 0} />}
+
+      {/* Weekly check-up reminder */}
+      {checkup?.dueNow && <CheckupCard status={checkup} />}
 
       {/* Primary actions */}
       <section aria-label="Start practising" className="flex flex-wrap items-center gap-3">
@@ -235,6 +242,27 @@ export function Dashboard() {
       </div>
 
     </div>
+  );
+}
+
+function CheckupCard({ status }: { status: CheckupStatusDTO }) {
+  const last = status.history.at(-1);
+  return (
+    <section aria-labelledby="checkup-card-h" className="flex flex-wrap items-center gap-4 rounded-3xl border border-border p-6">
+      <div className="min-w-0 flex-1">
+        <p className="text-xs font-semibold text-accent">Weekly check-up</p>
+        <h2 id="checkup-card-h" className="mt-1 text-xl font-semibold">
+          This week&apos;s check-up is ready
+        </h2>
+        <p className="mt-1 text-sm text-muted">
+          10 minutes on what you studied: reading, listening, grammar and speaking.
+          {last && ` Last time: ${Math.round(last.score * 100)}%.`}
+        </p>
+      </div>
+      <Link href="/progress/check-up" className="btn-primary">
+        Take the check-up
+      </Link>
+    </section>
   );
 }
 

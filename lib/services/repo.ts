@@ -5,6 +5,9 @@ import { NotFoundError } from "../errors";
 import {
   DEFAULT_SETTINGS,
   type Correction,
+  type CheckupDTO,
+  type CheckupResult,
+  type CheckupStatusDTO,
   type CourseProgressDTO,
   type GeneratedDTO,
   type GeneratedKind,
@@ -21,6 +24,8 @@ import {
   type VocabItem,
 } from "../schemas";
 import { ALL_LESSONS, getCourseLesson } from "../course";
+import { weekKey, weekStart, type CheckupPools } from "../checkup/build";
+import type { Phrase } from "../course/types";
 import { scheduleReview, termKey, type ReviewResult } from "./review";
 
 // ---------- Document shapes ----------
@@ -102,6 +107,19 @@ export type PracticeResultDoc = {
   at: Date;
 };
 
+export type CheckupDoc = {
+  _id: ObjectId;
+  profileId: ObjectId;
+  /** Monday of the week, "YYYY-MM-DD" (server-local time). */
+  weekOf: string;
+  takenAt: Date;
+  score: number;
+  skills: CheckupResult["skills"];
+  missed: { de: string; en: string }[];
+  /** AI sentences that were asked, so later check-ups use fresh ones. */
+  aiSentences: string[];
+};
+
 export type GeneratedDoc = {
   _id: ObjectId;
   profileId: ObjectId;
@@ -124,6 +142,7 @@ const col = {
   courseProgress: (db: Db) => db.collection<CourseProgressDoc>("course_progress"),
   practice: (db: Db) => db.collection<PracticeResultDoc>("practice_results"),
   generated: (db: Db) => db.collection<GeneratedDoc>("generated_content"),
+  checkups: (db: Db) => db.collection<CheckupDoc>("checkups"),
 };
 
 // ---------- Profile / settings ----------
@@ -644,6 +663,97 @@ export async function getPracticeSummary(profileId: ObjectId): Promise<PracticeS
   };
 }
 
+// ---------- Weekly check-up ----------
+
+const aiKey = (de: string) => de.trim().toLowerCase();
+
+/** The material a check-up draws from: studied this week, studied before, and unused AI sentences. */
+export async function checkupPools(profileId: ObjectId): Promise<CheckupPools> {
+  const db = await getDb();
+  const since = weekStart(new Date());
+  const [progress, vocab, generated, used] = await Promise.all([
+    col.courseProgress(db).find({ profileId }).toArray(),
+    col.vocabulary(db).find({ profileId, meaning: { $ne: "" } }).sort({ createdAt: -1 }).limit(400).toArray(),
+    listGenerated(profileId, "sentences", undefined, 30),
+    col.checkups(db).distinct("aiSentences", { profileId }),
+  ]);
+
+  const week: Phrase[] = [];
+  const review: Phrase[] = [];
+  for (const p of progress) {
+    const lesson = getCourseLesson(p.lessonId)?.lesson;
+    // Units skipped with the placement test count as older material.
+    if (lesson && !lesson.letters) (p.source !== "placement" && p.lastAttemptAt >= since ? week : review).push(...lesson.phrases);
+  }
+  for (const v of vocab) {
+    const phrase: Phrase = { id: `v-${v._id.toHexString()}`, de: v.term, en: v.meaning };
+    (v.createdAt >= since ? week : review).push(phrase);
+  }
+
+  const usedKeys = new Set(used.map(String));
+  const ai: Phrase[] = [];
+  for (const d of generated) {
+    for (const s of (d.payload as { sentences?: { de: string; en: string }[] }).sentences ?? []) {
+      if (!usedKeys.has(aiKey(s.de))) ai.push({ id: `ai-${d._id.toHexString()}-${ai.length}`, de: s.de, en: s.en });
+    }
+  }
+  return { week, review, ai };
+}
+
+function checkupDTO(d: CheckupDoc): CheckupDTO {
+  return { id: d._id.toHexString(), weekOf: d.weekOf, takenAt: d.takenAt.toISOString(), score: d.score, skills: d.skills, missed: d.missed };
+}
+
+/**
+ * Saves a check-up. Missed phrases go to the review queue: new ones are added,
+ * ones already in Vocabulary are due again now.
+ */
+export async function saveCheckup(profileId: ObjectId, result: CheckupResult): Promise<CheckupDoc> {
+  const db = await getDb();
+  const now = new Date();
+  const skills = Object.values(result.skills);
+  const doc: CheckupDoc = {
+    _id: new ObjectId(),
+    profileId,
+    weekOf: weekKey(now),
+    takenAt: now,
+    score: skills.reduce((n, s) => n + s.correct, 0) / skills.reduce((n, s) => n + s.asked, 0),
+    skills: result.skills,
+    missed: result.missed,
+    aiSentences: result.aiSentences.map(aiKey),
+  };
+  await col.checkups(db).insertOne(doc);
+  if (result.missed.length) {
+    await col.vocabulary(db).updateMany(
+      { profileId, termKey: { $in: result.missed.map((m) => termKey(m.de)) } },
+      { $set: { nextReviewAt: now, reviewState: "learning", streak: 0 } },
+    );
+    await addVocabulary(profileId, result.missed.map((m) => ({ term: m.de, meaning: m.en, example: "" })));
+  }
+  return doc;
+}
+
+export async function getCheckupStatus(profileId: ObjectId): Promise<CheckupStatusDTO> {
+  const db = await getDb();
+  const now = new Date();
+  const weekOf = weekKey(now);
+  const oldest = weekKey(new Date(weekStart(now).getTime() - 11 * 7 * 24 * 60 * 60 * 1000));
+  const [recent, studied] = await Promise.all([
+    col.checkups(db).find({ profileId, weekOf: { $gte: oldest } }).sort({ takenAt: -1 }).toArray(),
+    col.courseProgress(db).countDocuments({ profileId, lessonId: { $not: /^u0-/ } }, { limit: 1 }),
+  ]);
+  // The latest attempt counts for each week.
+  const byWeek = new Map<string, CheckupDoc>();
+  for (const d of recent) if (!byWeek.has(d.weekOf)) byWeek.set(d.weekOf, d);
+  const thisWeek = byWeek.get(weekOf) ?? null;
+  return {
+    dueNow: !thisWeek && studied > 0,
+    weekOf,
+    thisWeek: thisWeek && checkupDTO(thisWeek),
+    history: [...byWeek.values()].reverse().map(checkupDTO),
+  };
+}
+
 // ---------- AI-generated practice content ----------
 
 export function generatedDTO(d: GeneratedDoc): GeneratedDTO {
@@ -683,13 +793,14 @@ export async function deleteGenerated(profileId: ObjectId, id: ObjectId) {
 export async function exportAll(profile: ProfileDoc) {
   const db = await getDb();
   const profileId = profile._id;
-  const [sessions, messages, vocabulary, courseProgress, practiceResults, generatedContent] = await Promise.all([
+  const [sessions, messages, vocabulary, courseProgress, practiceResults, generatedContent, checkups] = await Promise.all([
     col.sessions(db).find({ profileId }).toArray(),
     col.messages(db).find({ profileId }).sort({ createdAt: 1 }).toArray(),
     col.vocabulary(db).find({ profileId }).toArray(),
     col.courseProgress(db).find({ profileId }).toArray(),
     col.practice(db).find({ profileId }).toArray(),
     col.generated(db).find({ profileId }).toArray(),
+    col.checkups(db).find({ profileId }).toArray(),
   ]);
   return {
     exportedAt: new Date().toISOString(),
@@ -701,6 +812,7 @@ export async function exportAll(profile: ProfileDoc) {
     courseProgress,
     practiceResults,
     generatedContent,
+    checkups,
   };
 }
 
@@ -709,7 +821,7 @@ export async function deleteAllHistory(profileId: ObjectId, what: { sessions: bo
   const ops: Promise<unknown>[] = [];
   if (what.sessions) ops.push(col.messages(db).deleteMany({ profileId }), col.sessions(db).deleteMany({ profileId }));
   if (what.vocabulary) ops.push(col.vocabulary(db).deleteMany({ profileId }));
-  if (what.sessions) ops.push(col.courseProgress(db).deleteMany({ profileId }), col.practice(db).deleteMany({ profileId }), col.generated(db).deleteMany({ profileId }));
+  if (what.sessions) ops.push(col.courseProgress(db).deleteMany({ profileId }), col.practice(db).deleteMany({ profileId }), col.generated(db).deleteMany({ profileId }), col.checkups(db).deleteMany({ profileId }));
   await Promise.all(ops);
 }
 

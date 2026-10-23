@@ -7,14 +7,14 @@ import { Notice } from "@/components/ui/Feedback";
 import { CheckIcon, SpeakerIcon, StopIcon } from "@/components/ui/icons";
 import { rng } from "@/lib/course/exercises";
 import { savePractice } from "@/lib/practice-client";
-import { storyTokens, type Story } from "@/lib/stories";
+import { TappableText } from "@/components/dictionary/WordLookup";
+import { type Story } from "@/lib/stories";
 
 export function StoryReader({ story }: { story: Story }) {
   const audio = useConfiguredAudio();
   const [current, setCurrent] = useState<number | null>(null);
   const [playingAll, setPlayingAll] = useState(false);
   const [showEnglish, setShowEnglish] = useState(false);
-  const [word, setWord] = useState<{ sentence: number; key: string; text: string } | null>(null);
   const [stage, setStage] = useState<"read" | "quiz">("read");
   const run = useRef(0);
   const { play, stop } = audio;
@@ -70,7 +70,7 @@ export function StoryReader({ story }: { story: Story }) {
         </label>
       </div>
 
-      <p className="text-sm text-muted">Tap any word for its meaning. Tap the speaker to hear one sentence.</p>
+      <p className="text-sm text-muted">Tap any word for its meaning and to save it. Tap the speaker to hear one sentence.</p>
 
       <ol className="space-y-4">
         {story.sentences.map((s, i) => (
@@ -79,36 +79,13 @@ export function StoryReader({ story }: { story: Story }) {
               <button type="button" onClick={() => playOne(i)} className="mt-1 shrink-0 text-muted hover:text-ink" aria-label={`Play sentence ${i + 1}`}>
                 <SpeakerIcon width={16} height={16} />
               </button>
-              <p className="text-xl leading-relaxed" lang="de">
-                {storyTokens(s.de).map((t, k) =>
-                  t.key ? (
-                    <button
-                      key={k}
-                      type="button"
-                      onClick={() => setWord(word?.sentence === i && word.key === t.key ? null : { sentence: i, key: t.key!, text: t.text })}
-                      className={`rounded px-0.5 underline decoration-transparent underline-offset-4 transition-colors hover:decoration-accent/60 ${
-                        word?.sentence === i && word.key === t.key ? "bg-accent-soft decoration-accent" : ""
-                      }`}
-                    >
-                      {t.text}
-                    </button>
-                  ) : (
-                    <span key={k}>{t.text}</span>
-                  ),
-                )}
-              </p>
+              <TappableText
+                text={s.de}
+                className="text-xl leading-relaxed"
+                glossary={story.glossary}
+                onListen={(w) => play(w, { key: `w-${w.toLowerCase()}` })}
+              />
             </div>
-            {word?.sentence === i && (
-              <p className="animate-rise mt-1 ml-6 inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-1.5 text-sm" role="status">
-                <span className="font-semibold" lang="de">
-                  {word.text.replace(/[„“”"'.,!?:;]/g, "")}
-                </span>
-                <span className="text-muted">{story.glossary[word.key] ?? "(a small, common word)"}</span>
-                <button type="button" onClick={() => play(word.key, { key: `w-${word.key}` })} className="text-muted hover:text-ink" aria-label="Listen to the word">
-                  <SpeakerIcon width={14} height={14} />
-                </button>
-              </p>
-            )}
             {showEnglish && <p className="mt-1 ml-6 text-sm text-muted">{s.en}</p>}
           </li>
         ))}

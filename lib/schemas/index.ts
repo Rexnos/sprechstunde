@@ -116,6 +116,42 @@ export type PracticeSummaryDTO = {
   placement: { startUnitId: string | null; at: string } | null;
 };
 
+// ---------- Weekly check-up ----------
+
+export const CheckupSkillSchema = z.enum(["reading", "listening", "grammar", "speaking"]);
+
+const SkillScoreSchema = z
+  .object({ correct: z.number().int().min(0).max(20), asked: z.number().int().min(1).max(20) })
+  .refine((s) => s.correct <= s.asked, "correct can't exceed asked");
+
+export const CheckupResultSchema = z.object({
+  /** Skills left out were not tested (e.g. speaking skipped). */
+  skills: z.partialRecord(CheckupSkillSchema, SkillScoreSchema).refine((s) => Object.keys(s).length > 0, "No answers to save."),
+  missed: z.array(z.object({ de: z.string().trim().min(1).max(200), en: z.string().trim().min(1).max(200) })).max(20),
+  /** Keys of the AI sentences that were asked, so the next check-up uses fresh ones. */
+  aiSentences: z.array(z.string().max(200)).max(20),
+});
+export type CheckupResult = z.infer<typeof CheckupResultSchema>;
+
+export type CheckupDTO = {
+  id: string;
+  /** Monday of the week, "YYYY-MM-DD". */
+  weekOf: string;
+  takenAt: string;
+  score: number;
+  skills: CheckupResult["skills"];
+  missed: { de: string; en: string }[];
+};
+
+export type CheckupStatusDTO = {
+  /** No check-up yet this week, and there's material to test. */
+  dueNow: boolean;
+  weekOf: string;
+  thisWeek: CheckupDTO | null;
+  /** The latest check-up of each week, oldest first (up to 12 weeks). */
+  history: CheckupDTO[];
+};
+
 export const GenerateRequestSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("story"), unitId: z.string().max(10) }),
   z.object({ kind: z.literal("sentences") }),

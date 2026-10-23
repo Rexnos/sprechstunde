@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import { TappableText } from "@/components/dictionary/WordLookup";
 import { MessageBubble } from "@/components/tutor/MessageBubble";
 
 describe("MessageBubble", () => {
@@ -45,7 +46,8 @@ describe("MessageBubble", () => {
         <MessageBubble message={{ id: "2", role: "assistant", text: "<img src=x onerror=alert(1)>Hallo", createdAt: new Date().toISOString() }} />
       </ol>,
     );
-    expect(screen.getByText("<img src=x onerror=alert(1)>Hallo")).toBeInTheDocument();
+    // Words are tappable buttons now, so match the paragraph's whole text.
+    expect(screen.getByText((_, el) => el?.tagName === "P" && el.textContent === "<img src=x onerror=alert(1)>Hallo")).toBeInTheDocument();
     expect(document.querySelector("img")).toBeNull();
   });
 
@@ -66,5 +68,18 @@ describe("MessageBubble", () => {
     );
     expect(screen.getByText("das Kino")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Listen to this reply" })).toBeInTheDocument();
+  });
+});
+
+describe("TappableText", () => {
+  it("makes words tappable, shows the material's own meaning first, and offers to save it", async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ items: [], available: false }), { status: 200, headers: { "Content-Type": "application/json" } }));
+    vi.stubGlobal("fetch", fetchMock);
+    render(<TappableText text="Der Hund schläft." glossary={{ hund: "dog" }} />);
+    fireEvent.click(screen.getByRole("button", { name: "Hund" }));
+    expect(screen.getByText("dog")).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Add Hund to Vocabulary" })).toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledWith(expect.stringContaining("/api/dictionary?q=Hund"), expect.anything());
+    vi.unstubAllGlobals();
   });
 });

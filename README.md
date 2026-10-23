@@ -11,6 +11,8 @@ A speaking-practice app for German that runs **entirely on your Windows PC**: a 
 - **Structured feedback** for each turn: the reply, a correction (original → better, with an explanation and category), new vocabulary, and a follow-up question.
 - **Spoken replies** with a local Piper voice. If Piper isn't available it falls back to the Windows/browser voice, and then to text only.
 - **Vocabulary list**: search, filters, "needs practice" / "I know it", and a flash-card review queue (simple Leitner scheduling).
+- **Dictionary** (optional, offline): look up German words, inflected forms ("ging" finds *gehen*) or English meanings, with gender, plural, IPA and examples. Needs a one-time import, see [Dictionary](#dictionary-offline-wiktionary).
+- **Weekly check-up** (`/progress/check-up`): a 10-minute test on what you studied, scored per skill (reading, listening, grammar & writing, speaking), with a week-by-week chart on the Progress page. See [Weekly check-up](#weekly-check-up).
 - **Progress page**: sessions, estimated practice minutes, a 14-day activity chart, your most frequent correction categories, and lesson history.
 - **Settings**: level (A1–C1), how often to correct, explanation language, model, voice, speech speed, autoplay and daily goal.
 - **Status page** that checks MongoDB, Ollama, STT and TTS, with a fix hint for each.
@@ -199,6 +201,29 @@ Generation time with qwen3.5:4b (measured on the GTX 1650, about 50% on CPU): st
 
 Content lives in `lib/pronunciation.ts` and `lib/stories/index.ts`. Every pronunciation pair was checked with Piper's phonemizer to differ in the intended sound.
 
+## Weekly check-up
+
+Once you've finished a lesson, the Dashboard shows a reminder each week (weeks run Monday to Sunday). The check-up has 15 questions: 4 reading (choose the meaning), 4 listening, 4 grammar & writing (fill the gap, put the words in order) and 3 speaking (read a sentence aloud).
+
+- **Material:** about half from lessons and words you studied this week, a third from older material (to check you still remember it), and the rest from AI dictation sentences you haven't been tested on. If there aren't enough unused AI sentences and Ollama is running, the intro page writes new ones in the background. You can start without waiting. With nothing new this week it becomes a review check-up.
+- **Speaking** uses speech recognition, so it's a soft check. "Finish without the speaking part" marks speaking as *not tested* instead of 0%.
+- **Results:** overall score and a score per skill, with the change since last week. Missed phrases go to your Vocabulary review queue. Retaking in the same week replaces that week's result on the chart.
+- Results are stored in the `checkups` collection and are included in export and in "delete sessions".
+
+## Dictionary (offline Wiktionary)
+
+The Dictionary page searches a local copy of the German entries from the English Wiktionary, about 100k words. It isn't included, so import it once:
+
+1. Download the German JSONL extract (about 1 GB) from [kaikki.org/dictionary/German](https://kaikki.org/dictionary/German/) into `data/`. Gzipped (`.jsonl.gz`) works too.
+2. Import it:
+   - Without Docker: `npm run dict:import -- data/kaikki.org-dictionary-German.jsonl` (uses `MONGODB_URI` from `.env.local`; takes a few minutes).
+   - Docker (needs Node.js and `npm install` on the host for the converter): `powershell -ExecutionPolicy Bypass -File scripts/docker-dictionary.ps1 data\kaikki.org-dictionary-German.jsonl`, or `./scripts/docker-dictionary.sh data/kaikki.org-dictionary-German.jsonl`.
+3. Open **Dictionary** in the menu. Re-running the import replaces the old copy, so you can update it whenever kaikki.org publishes a new extract.
+
+**Tap to look up:** in stories, tutor replies and lesson phrases, tap any German word. A popup shows the meaning from the lesson or story first, then the dictionary entry. Inflected forms find their base word: tapping "ging" shows *gehen*. **Add to Vocabulary** saves the base form (nouns with their article), its first meaning, and the sentence you tapped it in as the example. It's also on every entry on the Dictionary page. Without the dictionary imported, the popup still shows the lesson or story meaning.
+
+Search order: the exact headword, the same word typed with ae/oe/ue/ss, inflected forms, headwords starting with what you typed, then English meanings. The data lives in the `dictionary` collection. It isn't part of export, delete or the Docker backup scripts, because you can re-import it.
+
 ## Voice calls
 
 **Start a call** on the dashboard, or **Call** on a lesson or in the chat header, opens a voice call:
@@ -302,6 +327,7 @@ Check these before distributing anything:
 - **Piper** (`piper-tts`, GPL-3.0); voice `de_DE-thorsten-medium`: see its model card in the rhasspy/piper-voices repository.
 - **Ollama** (MIT). **Each LLM has its own licence** (Gemma Terms of Use, Qwen licence, Llama Community License…).
 - MongoDB Community Server (SSPL), Next.js (MIT).
+- Dictionary data: **Wiktionary** contributors, via kaikki.org (wiktextract), **CC BY-SA 4.0**. Keep the attribution shown on the Dictionary page.
 
 ## Roadmap (after MVP)
 

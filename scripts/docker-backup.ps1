@@ -9,7 +9,7 @@ $file = Join-Path $dir ("tutor-" + (Get-Date -Format "yyyy-MM-dd_HHmm") + ".arch
 Push-Location $root
 try {
     # Write inside the container, then copy out (avoids PowerShell mangling binary pipes).
-    docker compose exec -T mongo mongodump --db local_language_tutor --archive=/tmp/backup.archive.gz --gzip
+    docker compose exec -T mongo mongodump --db local_language_tutor --excludeCollection=dictionary --archive=/tmp/backup.archive.gz --gzip
     if ($LASTEXITCODE -ne 0) { throw "mongodump failed. Is the stack running? (scripts/docker-up.ps1)" }
     $container = (docker compose ps -q mongo).Trim()
     docker cp "${container}:/tmp/backup.archive.gz" $file

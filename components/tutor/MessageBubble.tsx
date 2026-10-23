@@ -1,5 +1,6 @@
 import type { MessageDTO } from "@/lib/schemas";
 import { CheckIcon, MicIcon, SpeakerIcon } from "@/components/ui/icons";
+import { TappableText } from "@/components/dictionary/WordLookup";
 import { CorrectionCard } from "./CorrectionCard";
 
 type Props = {
@@ -55,7 +56,7 @@ export function MessageBubble({ message, speaking, loadingAudio, onSpeak, onStop
   return (
     <li className="animate-rise flex flex-col items-start">
       <div className="group relative max-w-[min(85%,36rem)] rounded-3xl rounded-bl-lg border border-border bg-tutor px-4 py-2.5 pr-12 text-[15px] whitespace-pre-wrap" lang="de">
-        {message.text}
+        <TappableText text={message.text} onListen={onSpeakText ? (w) => onSpeakText(`${message.id}:word`, w) : undefined} />
         {onSpeak && (
           <button
             type="button"

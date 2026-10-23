@@ -4,10 +4,23 @@ import { useEffect, useState } from "react";
 import type { usePhraseAudio } from "@/components/audio/usePhraseAudio";
 import { SpeakerIcon } from "@/components/ui/icons";
 import Link from "next/link";
-import type { CourseLesson } from "@/lib/course";
+import { TappableText } from "@/components/dictionary/WordLookup";
+import type { CourseLesson, Phrase } from "@/lib/course";
+import { storyTokens } from "@/lib/stories";
 import { AlphabetGrid } from "../AlphabetGrid";
 
 type Audio = ReturnType<typeof usePhraseAudio>;
+
+/** The lesson's word-by-word gloss, keyed like tapped words; shown before the dictionary's meanings. */
+function glossaryOf(words: Phrase["words"]): Record<string, string> | undefined {
+  if (!words) return undefined;
+  const out: Record<string, string> = {};
+  for (const [de, en] of words) {
+    const keys = storyTokens(de).filter((t) => t.key);
+    if (keys.length === 1) out[keys[0].key!] = en;
+  }
+  return out;
+}
 
 export function LearnStep({ lesson, audio, onDone }: { lesson: CourseLesson; audio: Audio; onDone: () => void }) {
   // -1 = intro card, then one card per phrase
@@ -111,9 +124,12 @@ export function LearnStep({ lesson, audio, onDone }: { lesson: CourseLesson; aud
         Phrase {index + 1} of {lesson.phrases.length}
       </p>
       <div>
-        <p className="font-[family-name:var(--font-display)] text-4xl leading-tight font-semibold tracking-tight" lang="de">
-          {phrase.de}
-        </p>
+        <TappableText
+          text={phrase.de}
+          className="font-[family-name:var(--font-display)] text-4xl leading-tight font-semibold tracking-tight"
+          glossary={glossaryOf(phrase.words)}
+          onListen={(w) => play(w, { key: `w-${w.toLowerCase()}` })}
+        />
         <p className="mt-2 text-lg text-muted">{phrase.en}</p>
       </div>
 
