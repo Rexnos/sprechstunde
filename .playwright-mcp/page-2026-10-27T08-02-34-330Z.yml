@@ -1,0 +1,57 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - link "Skip to content" [ref=f3e3] [cursor=pointer]:
+      - /url: "#main"
+    - navigation "Main" [ref=f3e4]:
+      - link "Sprechstunde" [ref=f3e5] [cursor=pointer]:
+        - /url: /dashboard
+        - generic [aria-hidden] [ref=f3e6]:
+          - generic [ref=f3e7]: „
+          - generic [ref=f3e8]: “
+        - text: Sprechstunde
+      - generic [ref=f3e9]:
+        - list [ref=f3e11]:
+          - listitem [ref=f3e12]:
+            - link "Home" [ref=f3e13] [cursor=pointer]:
+              - /url: /dashboard
+        - generic [ref=f3e16]:
+          - paragraph [ref=f3e17]: Learn
+          - list [ref=f3e18]:
+            - listitem [ref=f3e19]:
+              - link "Course" [ref=f3e20] [cursor=pointer]:
+                - /url: /course
+            - listitem [ref=f3e23]:
+              - link "Practice" [ref=f3e24] [cursor=pointer]:
+                - /url: /practice
+            - listitem [ref=f3e28]:
+              - link "Vocabulary" [ref=f3e29] [cursor=pointer]:
+                - /url: /vocabulary
+            - listitem [ref=f3e33]:
+              - link "Dictionary" [ref=f3e34] [cursor=pointer]:
+                - /url: /dictionary
+        - generic [ref=f3e38]:
+          - paragraph [ref=f3e39]: Speak
+          - list [ref=f3e40]:
+            - listitem [ref=f3e41]:
+              - link "Tutor" [ref=f3e42] [cursor=pointer]:
+                - /url: /tutor
+            - listitem [ref=f3e45]:
+              - link "Role-plays" [ref=f3e46] [cursor=pointer]:
+                - /url: /lessons
+        - generic [ref=f3e50]:
+          - paragraph [ref=f3e51]: You
+          - list [ref=f3e52]:
+            - listitem [ref=f3e53]:
+              - link "Progress" [ref=f3e54] [cursor=pointer]:
+                - /url: /progress
+            - listitem [ref=f3e57]:
+              - link "Settings" [ref=f3e58] [cursor=pointer]:
+                - /url: /settings
+            - listitem [ref=f3e62]:
+              - link "Status" [ref=f3e63] [cursor=pointer]:
+                - /url: /status
+      - link "Checking services…" [ref=f3e67] [cursor=pointer]:
+        - /url: /status
+    - main [ref=f3e70]:
+      - status [ref=f3e71]: Loading…
+  - button "Open Next.js Dev Tools" [ref=f3e77] [cursor=pointer]

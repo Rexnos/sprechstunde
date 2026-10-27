@@ -1,0 +1,87 @@
+- generic [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - link "Skip to content" [ref=f7e3] [cursor=pointer]:
+      - /url: "#main"
+    - navigation "Main" [ref=f7e4]:
+      - link "Sprechstunde" [ref=f7e5] [cursor=pointer]:
+        - /url: /dashboard
+      - generic [ref=f7e20]:
+        - list [ref=f7e22]:
+          - listitem [ref=f7e23]:
+            - link "Home" [ref=f7e24] [cursor=pointer]:
+              - /url: /dashboard
+        - generic [ref=f7e27]:
+          - paragraph [ref=f7e28]: Learn
+          - list [ref=f7e29]:
+            - listitem [ref=f7e30]:
+              - link "Course" [ref=f7e31] [cursor=pointer]:
+                - /url: /course
+            - listitem [ref=f7e34]:
+              - link "Practice" [ref=f7e35] [cursor=pointer]:
+                - /url: /practice
+            - listitem [ref=f7e39]:
+              - link "Vocabulary" [ref=f7e40] [cursor=pointer]:
+                - /url: /vocabulary
+            - listitem [ref=f7e44]:
+              - link "Dictionary" [ref=f7e45] [cursor=pointer]:
+                - /url: /dictionary
+        - generic [ref=f7e49]:
+          - paragraph [ref=f7e50]: Speak
+          - list [ref=f7e51]:
+            - listitem [ref=f7e52]:
+              - link "Tutor" [ref=f7e53] [cursor=pointer]:
+                - /url: /tutor
+            - listitem [ref=f7e56]:
+              - link "Role-plays" [ref=f7e57] [cursor=pointer]:
+                - /url: /lessons
+        - generic [ref=f7e61]:
+          - paragraph [ref=f7e62]: You
+          - list [ref=f7e63]:
+            - listitem [ref=f7e64]:
+              - link "Progress" [ref=f7e65] [cursor=pointer]:
+                - /url: /progress
+            - listitem [ref=f7e68]:
+              - link "Settings" [ref=f7e69] [cursor=pointer]:
+                - /url: /settings
+            - listitem [ref=f7e73]:
+              - link "Status" [ref=f7e74] [cursor=pointer]:
+                - /url: /status
+      - link "Checking services…" [ref=f7e78] [cursor=pointer]:
+        - /url: /status
+    - main [ref=f7e81]:
+      - paragraph [ref=f7e82]:
+        - link "Course" [ref=f7e83] [cursor=pointer]:
+          - /url: /course
+        - text: / Placement test
+      - generic [ref=f7e85]:
+        - heading "Find your starting point" [level=1] [ref=f7e86]
+        - paragraph [ref=f7e87]: Already know some German? Skip what you know.
+      - generic [ref=f7e88]:
+        - paragraph [ref=f7e89]: You'll get three questions from each unit, starting at the level you pick. When it gets too hard, the test stops by itself, so it usually takes 5–15 minutes.
+        - group "Start the test at" [ref=f7e90]:
+          - generic [ref=f7e92]:
+            - generic [ref=f7e93] [cursor=pointer]:
+              - radio "A1 · Beginner" [checked] [ref=f7e94]
+              - text: A1 · Beginner
+            - generic [ref=f7e95] [cursor=pointer]:
+              - radio "A2 · Elementary" [ref=f7e96]
+              - text: A2 · Elementary
+            - generic [ref=f7e97] [cursor=pointer]:
+              - radio "B1 · Intermediate" [ref=f7e98]
+              - text: B1 · Intermediate
+            - generic [ref=f7e99] [cursor=pointer]:
+              - radio "B2 · Upper intermediate" [ref=f7e100]
+              - text: B2 · Upper intermediate
+            - generic [ref=f7e101] [cursor=pointer]:
+              - radio "C1 · Advanced" [ref=f7e102]
+              - text: C1 · Advanced
+          - paragraph [ref=f7e103]: Not sure? Start at A1. Levels below the one you pick are marked as done.
+        - list [ref=f7e104]:
+          - listitem [ref=f7e105]: Don't guess wildly. Press “I don't know” instead, so the result is accurate.
+          - listitem [ref=f7e106]: "Turn your sound on: some questions are listening questions."
+          - listitem [ref=f7e107]: Units you pass are marked as done, and you start at the first unit that's new to you.
+        - generic [ref=f7e108]:
+          - button "Start the test" [active] [ref=f7e109]
+          - link "Back to the course" [ref=f7e110] [cursor=pointer]:
+            - /url: /course
+  - button "Open Next.js Dev Tools" [ref=f7e116] [cursor=pointer]

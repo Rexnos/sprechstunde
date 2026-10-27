@@ -1,0 +1,33 @@
+[     208ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[     255ms] [LOG] [HMR] connected @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[   13855ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[   13888ms] [LOG] [Fast Refresh] done in 14ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  275169ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  275278ms] [LOG] [Fast Refresh] done in 136ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  275278ms] [LOG] [Fast Refresh] done in 136ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  299550ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  299640ms] [LOG] [Fast Refresh] done in 106ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  322536ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  322686ms] [LOG] [Fast Refresh] done in 253ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  322692ms] [LOG] [Fast Refresh] done in 253ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  326005ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  326088ms] [LOG] [Fast Refresh] done in 174ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  326122ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  326765ms] [LOG] [Fast Refresh] done in 649ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  326855ms] [LOG] [Fast Refresh] done in 649ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  327049ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  327139ms] [LOG] [Fast Refresh] done in 175ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  327226ms] [LOG] [Fast Refresh] done in 175ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  343590ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  343870ms] [LOG] [Fast Refresh] done in 305ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  344036ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  344458ms] [LOG] [Fast Refresh] done in 520ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  344605ms] [LOG] [Fast Refresh] done in 520ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  345800ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  345871ms] [LOG] [Fast Refresh] done in 97ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  345872ms] [LOG] [Fast Refresh] done in 97ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  348484ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  348533ms] [LOG] [Fast Refresh] done in 74ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  348568ms] [LOG] [Fast Refresh] done in 74ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  357726ms] [LOG] [Fast Refresh] rebuilding @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719
+[  357835ms] [LOG] [Fast Refresh] done in 220ms @ http://127.0.0.1:3000/_next/static/chunks/node_modules_next_dist_1bjkg68unqmjx._.js:719

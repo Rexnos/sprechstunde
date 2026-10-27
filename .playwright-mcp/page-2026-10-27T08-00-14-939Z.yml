@@ -1,0 +1,45 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to content" [ref=e3] [cursor=pointer]:
+      - /url: "#main"
+    - navigation "Main" [ref=e4]:
+      - link "Sprechstunde" [ref=e5] [cursor=pointer]:
+        - /url: /dashboard
+        - generic [aria-hidden] [ref=e6]: S
+        - text: Sprechstunde
+      - list [ref=e7]:
+        - listitem [ref=e8]:
+          - link "Home" [ref=e9] [cursor=pointer]:
+            - /url: /dashboard
+        - listitem [ref=e12]:
+          - link "Course" [ref=e13] [cursor=pointer]:
+            - /url: /course
+        - listitem [ref=e16]:
+          - link "Practice" [ref=e17] [cursor=pointer]:
+            - /url: /practice
+        - listitem [ref=e21]:
+          - link "Tutor" [ref=e22] [cursor=pointer]:
+            - /url: /tutor
+        - listitem [ref=e25]:
+          - link "Role-plays" [ref=e26] [cursor=pointer]:
+            - /url: /lessons
+        - listitem [ref=e30]:
+          - link "Vocabulary" [ref=e31] [cursor=pointer]:
+            - /url: /vocabulary
+        - listitem [ref=e35]:
+          - link "Dictionary" [ref=e36] [cursor=pointer]:
+            - /url: /dictionary
+        - listitem [ref=e40]:
+          - link "Progress" [ref=e41] [cursor=pointer]:
+            - /url: /progress
+        - listitem [ref=e44]:
+          - link "Settings" [ref=e45] [cursor=pointer]:
+            - /url: /settings
+        - listitem [ref=e49]:
+          - link "Status" [ref=e50] [cursor=pointer]:
+            - /url: /status
+      - link "Checking services…" [ref=e54] [cursor=pointer]:
+        - /url: /status
+    - main [ref=e57]:
+      - status [ref=e58]: Loading…
+  - button "Open Next.js Dev Tools" [ref=e64] [cursor=pointer]

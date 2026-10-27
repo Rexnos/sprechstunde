@@ -1,0 +1,572 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - link "Skip to content" [ref=f4e3] [cursor=pointer]:
+      - /url: "#main"
+    - navigation "Main" [ref=f4e4]:
+      - link "Sprechstunde" [ref=f4e5] [cursor=pointer]:
+        - /url: /dashboard
+      - generic [ref=f4e20]:
+        - list [ref=f4e22]:
+          - listitem [ref=f4e23]:
+            - link "Home" [ref=f4e24] [cursor=pointer]:
+              - /url: /dashboard
+        - generic [ref=f4e27]:
+          - paragraph [ref=f4e28]: Learn
+          - list [ref=f4e29]:
+            - listitem [ref=f4e30]:
+              - link "Course" [ref=f4e31] [cursor=pointer]:
+                - /url: /course
+            - listitem [ref=f4e34]:
+              - link "Practice" [ref=f4e35] [cursor=pointer]:
+                - /url: /practice
+            - listitem [ref=f4e39]:
+              - link "Vocabulary" [ref=f4e40] [cursor=pointer]:
+                - /url: /vocabulary
+            - listitem [ref=f4e44]:
+              - link "Dictionary" [ref=f4e45] [cursor=pointer]:
+                - /url: /dictionary
+        - generic [ref=f4e49]:
+          - paragraph [ref=f4e50]: Speak
+          - list [ref=f4e51]:
+            - listitem [ref=f4e52]:
+              - link "Tutor" [ref=f4e53] [cursor=pointer]:
+                - /url: /tutor
+            - listitem [ref=f4e56]:
+              - link "Role-plays" [ref=f4e57] [cursor=pointer]:
+                - /url: /lessons
+        - generic [ref=f4e61]:
+          - paragraph [ref=f4e62]: You
+          - list [ref=f4e63]:
+            - listitem [ref=f4e64]:
+              - link "Progress" [ref=f4e65] [cursor=pointer]:
+                - /url: /progress
+            - listitem [ref=f4e68]:
+              - link "Settings" [ref=f4e69] [cursor=pointer]:
+                - /url: /settings
+            - listitem [ref=f4e73]:
+              - link "Status" [ref=f4e74] [cursor=pointer]:
+                - /url: /status
+      - link "Checking services…" [ref=f4e78] [cursor=pointer]:
+        - /url: /status
+    - main [ref=f4e81]:
+      - generic [ref=f4e83]:
+        - heading "German from zero to C1" [level=1] [ref=f4e84]
+        - paragraph [ref=f4e85]: "Short units take you from your first word through A1, A2, B1 and B2 to advanced C1 German. Each lesson: learn, practise, repeat out loud, then a short guided conversation."
+      - generic [ref=f4e86]:
+        - generic [ref=f4e87]:
+          - generic [ref=f4e88]:
+            - paragraph [ref=f4e89]: Start at Unit 0 with the alphabet, or skip ahead.
+            - paragraph [ref=f4e90]:
+              - text: Already know some German?
+              - link "Take the placement test" [ref=f4e91] [cursor=pointer]:
+                - /url: /course/placement
+              - text: and skip what you know.
+          - link "Alphabet chart Hear every letter's German name, any time." [ref=f4e92] [cursor=pointer]:
+            - /url: /course/alphabet
+            - generic [aria-hidden] [ref=f4e93]: Aa Ää ß
+            - generic [ref=f4e94]:
+              - generic [ref=f4e95]: Alphabet chart
+              - text: Hear every letter's German name, any time.
+            - generic [aria-hidden] [ref=f4e96]: →
+        - group [ref=f4e97]:
+          - generic "A1 Beginner The alphabet, introductions, numbers, shopping, family, daily routine and getting around. 0/50" [ref=f4e98] [cursor=pointer]:
+            - generic [ref=f4e99]: A1
+            - generic [ref=f4e100]:
+              - generic [ref=f4e101]: Beginner
+              - generic [ref=f4e102]: The alphabet, introductions, numbers, shopping, family, daily routine and getting around.
+            - generic [ref=f4e103]: 0/50
+            - generic [aria-hidden] [ref=f4e104]: →
+          - list [ref=f4e105]:
+            - listitem [ref=f4e106]:
+              - generic [ref=f4e107]:
+                - generic [aria-hidden] [ref=f4e108]: "0"
+                - generic [ref=f4e109]:
+                  - 'heading "Unit 0: Das Alphabet" [level=2] [ref=f4e110]'
+                  - paragraph [ref=f4e111]: Learn the letters, how German sounds, and how to spell your name.
+                  - list [ref=f4e112]:
+                    - listitem [ref=f4e113]:
+                      - link "1 The letters A to Z Apfel · Brot · Haus" [ref=f4e114] [cursor=pointer]:
+                        - /url: /course/u0-1
+                        - generic [ref=f4e115]: "1"
+                        - generic [ref=f4e116]:
+                          - generic [ref=f4e117]: The letters A to Z
+                          - generic [ref=f4e118]: Apfel · Brot · Haus
+                        - generic [aria-hidden] [ref=f4e119]: →
+                    - listitem [ref=f4e120]:
+                      - link "2 Ä, Ö, Ü, ß and German sounds schön · Tür · Käse" [ref=f4e121] [cursor=pointer]:
+                        - /url: /course/u0-2
+                        - generic [ref=f4e122]: "2"
+                        - generic [ref=f4e123]:
+                          - generic [ref=f4e124]: Ä, Ö, Ü, ß and German sounds
+                          - generic [ref=f4e125]: schön · Tür · Käse
+                        - generic [aria-hidden] [ref=f4e126]: →
+                    - listitem [ref=f4e127]:
+                      - 'link "3 Spelling: Wie schreibt man das? Wie schreibt man das? · Können Sie das buchstabieren? · Wie ist Ihr Name?" [ref=f4e128] [cursor=pointer]':
+                        - /url: /course/u0-3
+                        - generic [ref=f4e129]: "3"
+                        - generic [ref=f4e130]:
+                          - generic [ref=f4e131]: "Spelling: Wie schreibt man das?"
+                          - generic [ref=f4e132]: Wie schreibt man das? · Können Sie das buchstabieren? · Wie ist Ihr Name?
+                        - generic [aria-hidden] [ref=f4e133]: →
+            - listitem [ref=f4e134]:
+              - generic [ref=f4e135]:
+                - generic [aria-hidden] [ref=f4e136]: "1"
+                - generic [ref=f4e137]:
+                  - 'heading "Unit 1: Hallo!" [level=2] [ref=f4e138]'
+                  - paragraph [ref=f4e139]: Say hello and goodbye, be polite, and ask how someone is.
+                  - list [ref=f4e140]:
+                    - listitem [ref=f4e141]:
+                      - link "1 Hello and goodbye Guten Morgen! · Guten Tag! · Guten Abend! Start" [ref=f4e142] [cursor=pointer]:
+                        - /url: /course/u1-1
+                        - generic [ref=f4e143]: "1"
+                        - generic [ref=f4e144]:
+                          - generic [ref=f4e145]: Hello and goodbye
+                          - generic [ref=f4e146]: Guten Morgen! · Guten Tag! · Guten Abend!
+                        - generic [ref=f4e147]: Start
+                        - generic [aria-hidden] [ref=f4e148]: →
+                    - listitem [ref=f4e149]:
+                      - link "2 Please, thank you, sorry Bitte. · Danke! · Danke schön!" [ref=f4e150] [cursor=pointer]:
+                        - /url: /course/u1-2
+                        - generic [ref=f4e151]: "2"
+                        - generic [ref=f4e152]:
+                          - generic [ref=f4e153]: Please, thank you, sorry
+                          - generic [ref=f4e154]: Bitte. · Danke! · Danke schön!
+                        - generic [aria-hidden] [ref=f4e155]: →
+                    - listitem [ref=f4e156]:
+                      - link "3 How are you? (du and Sie) Wie geht's? · Wie geht es dir? · Wie geht es Ihnen?" [ref=f4e157] [cursor=pointer]:
+                        - /url: /course/u1-3
+                        - generic [ref=f4e158]: "3"
+                        - generic [ref=f4e159]:
+                          - generic [ref=f4e160]: How are you? (du and Sie)
+                          - generic [ref=f4e161]: Wie geht's? · Wie geht es dir? · Wie geht es Ihnen?
+                        - generic [aria-hidden] [ref=f4e162]: →
+            - listitem [ref=f4e163]:
+              - generic [ref=f4e164]:
+                - generic [aria-hidden] [ref=f4e165]: "2"
+                - generic [ref=f4e166]:
+                  - 'heading "Unit 2: Ich bin …" [level=2] [ref=f4e167]'
+                  - paragraph [ref=f4e168]: "Introduce yourself: your name, where you're from, where you live, what you do."
+                  - list [ref=f4e169]:
+                    - listitem [ref=f4e170]:
+                      - link "1 My name is … Ich heiße Anna. · Ich bin Tom. · Wie heißt du?" [ref=f4e171] [cursor=pointer]:
+                        - /url: /course/u2-1
+                        - generic [ref=f4e172]: "1"
+                        - generic [ref=f4e173]:
+                          - generic [ref=f4e174]: My name is …
+                          - generic [ref=f4e175]: Ich heiße Anna. · Ich bin Tom. · Wie heißt du?
+                        - generic [aria-hidden] [ref=f4e176]: →
+                    - listitem [ref=f4e177]:
+                      - link "2 Where are you from? Woher kommst du? · Woher kommen Sie? · Ich komme aus Indien." [ref=f4e178] [cursor=pointer]:
+                        - /url: /course/u2-2
+                        - generic [ref=f4e179]: "2"
+                        - generic [ref=f4e180]:
+                          - generic [ref=f4e181]: Where are you from?
+                          - generic [ref=f4e182]: Woher kommst du? · Woher kommen Sie? · Ich komme aus Indien.
+                        - generic [aria-hidden] [ref=f4e183]: →
+                    - listitem [ref=f4e184]:
+                      - link "3 Where do you live? What languages do you speak? Wo wohnst du? · Ich wohne in Berlin. · Ich wohne in Kochi." [ref=f4e185] [cursor=pointer]:
+                        - /url: /course/u2-3
+                        - generic [ref=f4e186]: "3"
+                        - generic [ref=f4e187]:
+                          - generic [ref=f4e188]: Where do you live? What languages do you speak?
+                          - generic [ref=f4e189]: Wo wohnst du? · Ich wohne in Berlin. · Ich wohne in Kochi.
+                        - generic [aria-hidden] [ref=f4e190]: →
+                    - listitem [ref=f4e191]:
+                      - link "4 What do you do? Was machst du beruflich? · Ich bin Student. · Ich bin Ingenieurin." [ref=f4e192] [cursor=pointer]:
+                        - /url: /course/u2-4
+                        - generic [ref=f4e193]: "4"
+                        - generic [ref=f4e194]:
+                          - generic [ref=f4e195]: What do you do?
+                          - generic [ref=f4e196]: Was machst du beruflich? · Ich bin Student. · Ich bin Ingenieurin.
+                        - generic [aria-hidden] [ref=f4e197]: →
+            - listitem [ref=f4e198]:
+              - generic [ref=f4e199]:
+                - generic [aria-hidden] [ref=f4e200]: "3"
+                - generic [ref=f4e201]:
+                  - 'heading "Unit 3: Zahlen und Zeit" [level=2] [ref=f4e202]'
+                  - paragraph [ref=f4e203]: Count, say your age and phone number, tell the time and name the days.
+                  - list [ref=f4e204]:
+                    - listitem [ref=f4e205]:
+                      - link "1 Numbers 0 to 20 null, eins, zwei, drei · vier, fünf, sechs, sieben · acht, neun, zehn" [ref=f4e206] [cursor=pointer]:
+                        - /url: /course/u3-1
+                        - generic [ref=f4e207]: "1"
+                        - generic [ref=f4e208]:
+                          - generic [ref=f4e209]: Numbers 0 to 20
+                          - generic [ref=f4e210]: null, eins, zwei, drei · vier, fünf, sechs, sieben · acht, neun, zehn
+                        - generic [aria-hidden] [ref=f4e211]: →
+                    - listitem [ref=f4e212]:
+                      - link "2 Age and phone numbers Wie alt bist du? · Ich bin fünfundzwanzig Jahre alt. · Ich bin dreißig." [ref=f4e213] [cursor=pointer]:
+                        - /url: /course/u3-2
+                        - generic [ref=f4e214]: "2"
+                        - generic [ref=f4e215]:
+                          - generic [ref=f4e216]: Age and phone numbers
+                          - generic [ref=f4e217]: Wie alt bist du? · Ich bin fünfundzwanzig Jahre alt. · Ich bin dreißig.
+                        - generic [aria-hidden] [ref=f4e218]: →
+                    - listitem [ref=f4e219]:
+                      - link "3 What time is it? Wie spät ist es? · Es ist acht Uhr. · Es ist Viertel nach drei." [ref=f4e220] [cursor=pointer]:
+                        - /url: /course/u3-3
+                        - generic [ref=f4e221]: "3"
+                        - generic [ref=f4e222]:
+                          - generic [ref=f4e223]: What time is it?
+                          - generic [ref=f4e224]: Wie spät ist es? · Es ist acht Uhr. · Es ist Viertel nach drei.
+                        - generic [aria-hidden] [ref=f4e225]: →
+                    - listitem [ref=f4e226]:
+                      - link "4 Days of the week Montag, Dienstag, Mittwoch · Donnerstag, Freitag · Samstag, Sonntag" [ref=f4e227] [cursor=pointer]:
+                        - /url: /course/u3-4
+                        - generic [ref=f4e228]: "4"
+                        - generic [ref=f4e229]:
+                          - generic [ref=f4e230]: Days of the week
+                          - generic [ref=f4e231]: Montag, Dienstag, Mittwoch · Donnerstag, Freitag · Samstag, Sonntag
+                        - generic [aria-hidden] [ref=f4e232]: →
+            - listitem [ref=f4e233]:
+              - generic [ref=f4e234]:
+                - generic [aria-hidden] [ref=f4e235]: "4"
+                - generic [ref=f4e236]:
+                  - 'heading "Unit 4: Im Café" [level=2] [ref=f4e237]'
+                  - paragraph [ref=f4e238]: Order food and drinks, ask about prices and pay.
+                  - list [ref=f4e239]:
+                    - listitem [ref=f4e240]:
+                      - link "1 Ordering a drink Was möchten Sie? · Ich möchte einen Kaffee, bitte. · Ich hätte gern einen Tee." [ref=f4e241] [cursor=pointer]:
+                        - /url: /course/u4-1
+                        - generic [ref=f4e242]: "1"
+                        - generic [ref=f4e243]:
+                          - generic [ref=f4e244]: Ordering a drink
+                          - generic [ref=f4e245]: Was möchten Sie? · Ich möchte einen Kaffee, bitte. · Ich hätte gern einen Tee.
+                        - generic [aria-hidden] [ref=f4e246]: →
+                    - listitem [ref=f4e247]:
+                      - link "2 Something to eat Die Karte, bitte. · Was gibt es heute? · Ich nehme den Apfelkuchen." [ref=f4e248] [cursor=pointer]:
+                        - /url: /course/u4-2
+                        - generic [ref=f4e249]: "2"
+                        - generic [ref=f4e250]:
+                          - generic [ref=f4e251]: Something to eat
+                          - generic [ref=f4e252]: Die Karte, bitte. · Was gibt es heute? · Ich nehme den Apfelkuchen.
+                        - generic [aria-hidden] [ref=f4e253]: →
+                    - listitem [ref=f4e254]:
+                      - link "3 How much is it? Was kostet der Kaffee? · Wie viel kostet das? · Das kostet drei Euro fünfzig." [ref=f4e255] [cursor=pointer]:
+                        - /url: /course/u4-3
+                        - generic [ref=f4e256]: "3"
+                        - generic [ref=f4e257]:
+                          - generic [ref=f4e258]: How much is it?
+                          - generic [ref=f4e259]: Was kostet der Kaffee? · Wie viel kostet das? · Das kostet drei Euro fünfzig.
+                        - generic [aria-hidden] [ref=f4e260]: →
+                    - listitem [ref=f4e261]:
+                      - link "4 Paying Zahlen, bitte! · Die Rechnung, bitte. · Zusammen oder getrennt?" [ref=f4e262] [cursor=pointer]:
+                        - /url: /course/u4-4
+                        - generic [ref=f4e263]: "4"
+                        - generic [ref=f4e264]:
+                          - generic [ref=f4e265]: Paying
+                          - generic [ref=f4e266]: Zahlen, bitte! · Die Rechnung, bitte. · Zusammen oder getrennt?
+                        - generic [aria-hidden] [ref=f4e267]: →
+            - listitem [ref=f4e268]:
+              - generic [ref=f4e269]:
+                - generic [aria-hidden] [ref=f4e270]: "5"
+                - generic [ref=f4e271]:
+                  - 'heading "Unit 5: Einkaufen" [level=2] [ref=f4e272]'
+                  - paragraph [ref=f4e273]: "Shop for food and clothes: ask for things, colours, sizes and quantities."
+                  - list [ref=f4e274]:
+                    - listitem [ref=f4e275]:
+                      - link "1 At the supermarket Ich suche Milch. · Wo finde ich Brot? · Ich brauche einen Apfel." [ref=f4e276] [cursor=pointer]:
+                        - /url: /course/u5-1
+                        - generic [ref=f4e277]: "1"
+                        - generic [ref=f4e278]:
+                          - generic [ref=f4e279]: At the supermarket
+                          - generic [ref=f4e280]: Ich suche Milch. · Wo finde ich Brot? · Ich brauche einen Apfel.
+                        - generic [aria-hidden] [ref=f4e281]: →
+                    - listitem [ref=f4e282]:
+                      - link "2 Colours and clothes rot, blau, grün, gelb · schwarz, weiß, grau · Ich suche eine Jacke." [ref=f4e283] [cursor=pointer]:
+                        - /url: /course/u5-2
+                        - generic [ref=f4e284]: "2"
+                        - generic [ref=f4e285]:
+                          - generic [ref=f4e286]: Colours and clothes
+                          - generic [ref=f4e287]: rot, blau, grün, gelb · schwarz, weiß, grau · Ich suche eine Jacke.
+                        - generic [aria-hidden] [ref=f4e288]: →
+                    - listitem [ref=f4e289]:
+                      - link "3 Sizes and trying on Welche Größe haben Sie? · Größe M, bitte. · Kann ich das anprobieren?" [ref=f4e290] [cursor=pointer]:
+                        - /url: /course/u5-3
+                        - generic [ref=f4e291]: "3"
+                        - generic [ref=f4e292]:
+                          - generic [ref=f4e293]: Sizes and trying on
+                          - generic [ref=f4e294]: Welche Größe haben Sie? · Größe M, bitte. · Kann ich das anprobieren?
+                        - generic [aria-hidden] [ref=f4e295]: →
+                    - listitem [ref=f4e296]:
+                      - link "4 Buying and deciding Ich schaue nur, danke. · Ich nehme sie. · Ich überlege noch." [ref=f4e297] [cursor=pointer]:
+                        - /url: /course/u5-4
+                        - generic [ref=f4e298]: "4"
+                        - generic [ref=f4e299]:
+                          - generic [ref=f4e300]: Buying and deciding
+                          - generic [ref=f4e301]: Ich schaue nur, danke. · Ich nehme sie. · Ich überlege noch.
+                        - generic [aria-hidden] [ref=f4e302]: →
+            - listitem [ref=f4e303]:
+              - generic [ref=f4e304]:
+                - generic [aria-hidden] [ref=f4e305]: "6"
+                - generic [ref=f4e306]:
+                  - 'heading "Unit 6: Familie und Freunde" [level=2] [ref=f4e307]'
+                  - paragraph [ref=f4e308]: Talk about your family and friends and describe people.
+                  - list [ref=f4e309]:
+                    - listitem [ref=f4e310]:
+                      - link "1 My family Das ist meine Familie. · Das ist mein Vater. · Das ist meine Mutter." [ref=f4e311] [cursor=pointer]:
+                        - /url: /course/u6-1
+                        - generic [ref=f4e312]: "1"
+                        - generic [ref=f4e313]:
+                          - generic [ref=f4e314]: My family
+                          - generic [ref=f4e315]: Das ist meine Familie. · Das ist mein Vater. · Das ist meine Mutter.
+                        - generic [aria-hidden] [ref=f4e316]: →
+                    - listitem [ref=f4e317]:
+                      - 'link "2 haben: to have Hast du Kinder? · Ich habe zwei Kinder. · Er hat einen Hund." [ref=f4e318] [cursor=pointer]':
+                        - /url: /course/u6-2
+                        - generic [ref=f4e319]: "2"
+                        - generic [ref=f4e320]:
+                          - generic [ref=f4e321]: "haben: to have"
+                          - generic [ref=f4e322]: Hast du Kinder? · Ich habe zwei Kinder. · Er hat einen Hund.
+                        - generic [aria-hidden] [ref=f4e323]: →
+                    - listitem [ref=f4e324]:
+                      - link "3 Describing people Mein Bruder ist groß. · Meine Mutter ist sehr nett. · Er ist lustig." [ref=f4e325] [cursor=pointer]:
+                        - /url: /course/u6-3
+                        - generic [ref=f4e326]: "3"
+                        - generic [ref=f4e327]:
+                          - generic [ref=f4e328]: Describing people
+                          - generic [ref=f4e329]: Mein Bruder ist groß. · Meine Mutter ist sehr nett. · Er ist lustig.
+                        - generic [aria-hidden] [ref=f4e330]: →
+                    - listitem [ref=f4e331]:
+                      - link "4 Friends and free time Das ist mein Freund Max. · Was machst du gern? · Ich lese gern." [ref=f4e332] [cursor=pointer]:
+                        - /url: /course/u6-4
+                        - generic [ref=f4e333]: "4"
+                        - generic [ref=f4e334]:
+                          - generic [ref=f4e335]: Friends and free time
+                          - generic [ref=f4e336]: Das ist mein Freund Max. · Was machst du gern? · Ich lese gern.
+                        - generic [aria-hidden] [ref=f4e337]: →
+            - listitem [ref=f4e338]:
+              - generic [ref=f4e339]:
+                - generic [aria-hidden] [ref=f4e340]: "7"
+                - generic [ref=f4e341]:
+                  - 'heading "Unit 7: Mein Tag" [level=2] [ref=f4e342]'
+                  - paragraph [ref=f4e343]: Describe your daily routine and make plans with times and days.
+                  - list [ref=f4e344]:
+                    - listitem [ref=f4e345]:
+                      - link "1 My morning Ich stehe um sieben Uhr auf. · Ich dusche. · Ich frühstücke." [ref=f4e346] [cursor=pointer]:
+                        - /url: /course/u7-1
+                        - generic [ref=f4e347]: "1"
+                        - generic [ref=f4e348]:
+                          - generic [ref=f4e349]: My morning
+                          - generic [ref=f4e350]: Ich stehe um sieben Uhr auf. · Ich dusche. · Ich frühstücke.
+                        - generic [aria-hidden] [ref=f4e351]: →
+                    - listitem [ref=f4e352]:
+                      - link "2 Verb in second place Heute arbeite ich. · Am Abend koche ich. · Am Mittag esse ich in der Kantine." [ref=f4e353] [cursor=pointer]:
+                        - /url: /course/u7-2
+                        - generic [ref=f4e354]: "2"
+                        - generic [ref=f4e355]:
+                          - generic [ref=f4e356]: Verb in second place
+                          - generic [ref=f4e357]: Heute arbeite ich. · Am Abend koche ich. · Am Mittag esse ich in der Kantine.
+                        - generic [aria-hidden] [ref=f4e358]: →
+                    - listitem [ref=f4e359]:
+                      - link "3 Making plans Hast du am Samstag Zeit? · Ja, gern! · Leider nicht." [ref=f4e360] [cursor=pointer]:
+                        - /url: /course/u7-3
+                        - generic [ref=f4e361]: "3"
+                        - generic [ref=f4e362]:
+                          - generic [ref=f4e363]: Making plans
+                          - generic [ref=f4e364]: Hast du am Samstag Zeit? · Ja, gern! · Leider nicht.
+                        - generic [aria-hidden] [ref=f4e365]: →
+                    - listitem [ref=f4e366]:
+                      - link "4 What did you do? (a first look at the past) Was hast du gestern gemacht? · Ich habe gearbeitet. · Ich habe Deutsch gelernt." [ref=f4e367] [cursor=pointer]:
+                        - /url: /course/u7-4
+                        - generic [ref=f4e368]: "4"
+                        - generic [ref=f4e369]:
+                          - generic [ref=f4e370]: What did you do? (a first look at the past)
+                          - generic [ref=f4e371]: Was hast du gestern gemacht? · Ich habe gearbeitet. · Ich habe Deutsch gelernt.
+                        - generic [aria-hidden] [ref=f4e372]: →
+            - listitem [ref=f4e373]:
+              - generic [ref=f4e374]:
+                - generic [aria-hidden] [ref=f4e375]: "8"
+                - generic [ref=f4e376]:
+                  - 'heading "Unit 8: Unterwegs" [level=2] [ref=f4e377]'
+                  - paragraph [ref=f4e378]: Find your way, travel by train and make appointments.
+                  - list [ref=f4e379]:
+                    - listitem [ref=f4e380]:
+                      - link "1 Asking the way Entschuldigung, wo ist der Bahnhof? · Wo ist hier eine Apotheke? · Gehen Sie geradeaus." [ref=f4e381] [cursor=pointer]:
+                        - /url: /course/u8-1
+                        - generic [ref=f4e382]: "1"
+                        - generic [ref=f4e383]:
+                          - generic [ref=f4e384]: Asking the way
+                          - generic [ref=f4e385]: Entschuldigung, wo ist der Bahnhof? · Wo ist hier eine Apotheke? · Gehen Sie geradeaus.
+                        - generic [aria-hidden] [ref=f4e386]: →
+                    - listitem [ref=f4e387]:
+                      - link "2 At the train station Eine Fahrkarte nach München, bitte. · Einfach oder hin und zurück? · Hin und zurück, bitte." [ref=f4e388] [cursor=pointer]:
+                        - /url: /course/u8-2
+                        - generic [ref=f4e389]: "2"
+                        - generic [ref=f4e390]:
+                          - generic [ref=f4e391]: At the train station
+                          - generic [ref=f4e392]: Eine Fahrkarte nach München, bitte. · Einfach oder hin und zurück? · Hin und zurück, bitte.
+                        - generic [aria-hidden] [ref=f4e393]: →
+                    - listitem [ref=f4e394]:
+                      - link "3 Can and must (können, müssen) Ich kann ein bisschen Deutsch sprechen. · Kannst du mir helfen? · Können Sie das wiederholen?" [ref=f4e395] [cursor=pointer]:
+                        - /url: /course/u8-3
+                        - generic [ref=f4e396]: "3"
+                        - generic [ref=f4e397]:
+                          - generic [ref=f4e398]: Can and must (können, müssen)
+                          - generic [ref=f4e399]: Ich kann ein bisschen Deutsch sprechen. · Kannst du mir helfen? · Können Sie das wiederholen?
+                        - generic [aria-hidden] [ref=f4e400]: →
+                    - listitem [ref=f4e401]:
+                      - link "4 Making an appointment Ich möchte einen Termin machen. · Hier ist Anna Schmidt. · Haben Sie am Donnerstag Zeit?" [ref=f4e402] [cursor=pointer]:
+                        - /url: /course/u8-4
+                        - generic [ref=f4e403]: "4"
+                        - generic [ref=f4e404]:
+                          - generic [ref=f4e405]: Making an appointment
+                          - generic [ref=f4e406]: Ich möchte einen Termin machen. · Hier ist Anna Schmidt. · Haben Sie am Donnerstag Zeit?
+                        - generic [aria-hidden] [ref=f4e407]: →
+            - listitem [ref=f4e408]:
+              - generic [ref=f4e409]:
+                - generic [aria-hidden] [ref=f4e410]: "9"
+                - generic [ref=f4e411]:
+                  - 'heading "Unit 9: Zu Hause" [level=2] [ref=f4e412]'
+                  - paragraph [ref=f4e413]: Describe your flat, say where things are and use kein and nicht.
+                  - list [ref=f4e414]:
+                    - listitem [ref=f4e415]:
+                      - link "1 Rooms and furniture Das ist das Wohnzimmer. · Die Küche ist klein, aber schön. · Das Schlafzimmer ist groß und hell." [ref=f4e416] [cursor=pointer]:
+                        - /url: /course/u9-1
+                        - generic [ref=f4e417]: "1"
+                        - generic [ref=f4e418]:
+                          - generic [ref=f4e419]: Rooms and furniture
+                          - generic [ref=f4e420]: Das ist das Wohnzimmer. · Die Küche ist klein, aber schön. · Das Schlafzimmer ist groß und hell.
+                        - generic [aria-hidden] [ref=f4e421]: →
+                    - listitem [ref=f4e422]:
+                      - link "2 Where is it? (Wo ist …?) Wo ist mein Handy? · Es liegt auf dem Tisch. · Die Schlüssel sind in der Küche." [ref=f4e423] [cursor=pointer]:
+                        - /url: /course/u9-2
+                        - generic [ref=f4e424]: "2"
+                        - generic [ref=f4e425]:
+                          - generic [ref=f4e426]: Where is it? (Wo ist …?)
+                          - generic [ref=f4e427]: Wo ist mein Handy? · Es liegt auf dem Tisch. · Die Schlüssel sind in der Küche.
+                        - generic [aria-hidden] [ref=f4e428]: →
+                    - listitem [ref=f4e429]:
+                      - link "3 No and not (kein or nicht) Die Wohnung hat keinen Balkon. · Wir haben keine Spülmaschine. · Im Bad ist kein Fenster." [ref=f4e430] [cursor=pointer]:
+                        - /url: /course/u9-3
+                        - generic [ref=f4e431]: "3"
+                        - generic [ref=f4e432]:
+                          - generic [ref=f4e433]: No and not (kein or nicht)
+                          - generic [ref=f4e434]: Die Wohnung hat keinen Balkon. · Wir haben keine Spülmaschine. · Im Bad ist kein Fenster.
+                        - generic [aria-hidden] [ref=f4e435]: →
+                    - listitem [ref=f4e436]:
+                      - link "4 Looking at a flat ad Die Wohnung hat drei Zimmer. · Wie groß ist die Wohnung? · Sie hat siebzig Quadratmeter." [ref=f4e437] [cursor=pointer]:
+                        - /url: /course/u9-4
+                        - generic [ref=f4e438]: "4"
+                        - generic [ref=f4e439]:
+                          - generic [ref=f4e440]: Looking at a flat ad
+                          - generic [ref=f4e441]: Die Wohnung hat drei Zimmer. · Wie groß ist die Wohnung? · Sie hat siebzig Quadratmeter.
+                        - generic [aria-hidden] [ref=f4e442]: →
+            - listitem [ref=f4e443]:
+              - generic [ref=f4e444]:
+                - generic [aria-hidden] [ref=f4e445]: "10"
+                - generic [ref=f4e446]:
+                  - 'heading "Unit 10: Gesundheit" [level=2] [ref=f4e447]'
+                  - paragraph [ref=f4e448]: Say what hurts, talk to a doctor and a pharmacist, and give advice.
+                  - list [ref=f4e449]:
+                    - listitem [ref=f4e450]:
+                      - link "1 What hurts? Mir tut der Kopf weh. · Mir tut der Rücken weh. · Mir tun die Füße weh." [ref=f4e451] [cursor=pointer]:
+                        - /url: /course/u10-1
+                        - generic [ref=f4e452]: "1"
+                        - generic [ref=f4e453]:
+                          - generic [ref=f4e454]: What hurts?
+                          - generic [ref=f4e455]: Mir tut der Kopf weh. · Mir tut der Rücken weh. · Mir tun die Füße weh.
+                        - generic [aria-hidden] [ref=f4e456]: →
+                    - listitem [ref=f4e457]:
+                      - link "2 At the doctor's Was fehlt Ihnen? · Seit wann haben Sie das? · Seit drei Tagen." [ref=f4e458] [cursor=pointer]:
+                        - /url: /course/u10-2
+                        - generic [ref=f4e459]: "2"
+                        - generic [ref=f4e460]:
+                          - generic [ref=f4e461]: At the doctor's
+                          - generic [ref=f4e462]: Was fehlt Ihnen? · Seit wann haben Sie das? · Seit drei Tagen.
+                        - generic [aria-hidden] [ref=f4e463]: →
+                    - listitem [ref=f4e464]:
+                      - link "3 Giving advice (the imperative) Trinken Sie viel Wasser. · Nehmen Sie die Tabletten dreimal am Tag. · Bleiben Sie zwei Tage im Bett." [ref=f4e465] [cursor=pointer]:
+                        - /url: /course/u10-3
+                        - generic [ref=f4e466]: "3"
+                        - generic [ref=f4e467]:
+                          - generic [ref=f4e468]: Giving advice (the imperative)
+                          - generic [ref=f4e469]: Trinken Sie viel Wasser. · Nehmen Sie die Tabletten dreimal am Tag. · Bleiben Sie zwei Tage im Bett.
+                        - generic [aria-hidden] [ref=f4e470]: →
+                    - listitem [ref=f4e471]:
+                      - link "4 At the pharmacy Ich brauche etwas gegen Kopfschmerzen. · Haben Sie etwas gegen Husten? · Hier ist mein Rezept." [ref=f4e472] [cursor=pointer]:
+                        - /url: /course/u10-4
+                        - generic [ref=f4e473]: "4"
+                        - generic [ref=f4e474]:
+                          - generic [ref=f4e475]: At the pharmacy
+                          - generic [ref=f4e476]: Ich brauche etwas gegen Kopfschmerzen. · Haben Sie etwas gegen Husten? · Hier ist mein Rezept.
+                        - generic [aria-hidden] [ref=f4e477]: →
+            - listitem [ref=f4e478]:
+              - generic [ref=f4e479]:
+                - generic [aria-hidden] [ref=f4e480]: "11"
+                - generic [ref=f4e481]:
+                  - 'heading "Unit 11: Freizeit und Wetter" [level=2] [ref=f4e482]'
+                  - paragraph [ref=f4e483]: Talk about hobbies, the weather, dates and what you want to do.
+                  - list [ref=f4e484]:
+                    - listitem [ref=f4e485]:
+                      - 'link "1 Hobbies: gern, lieber, am liebsten Was machst du gern in deiner Freizeit? · Ich lese gern. · Ich spiele gern Fußball." [ref=f4e486] [cursor=pointer]':
+                        - /url: /course/u11-1
+                        - generic [ref=f4e487]: "1"
+                        - generic [ref=f4e488]:
+                          - generic [ref=f4e489]: "Hobbies: gern, lieber, am liebsten"
+                          - generic [ref=f4e490]: Was machst du gern in deiner Freizeit? · Ich lese gern. · Ich spiele gern Fußball.
+                        - generic [aria-hidden] [ref=f4e491]: →
+                    - listitem [ref=f4e492]:
+                      - link "2 The weather and the seasons Wie ist das Wetter heute? · Die Sonne scheint. · Es regnet." [ref=f4e493] [cursor=pointer]:
+                        - /url: /course/u11-2
+                        - generic [ref=f4e494]: "2"
+                        - generic [ref=f4e495]:
+                          - generic [ref=f4e496]: The weather and the seasons
+                          - generic [ref=f4e497]: Wie ist das Wetter heute? · Die Sonne scheint. · Es regnet.
+                        - generic [aria-hidden] [ref=f4e498]: →
+                    - listitem [ref=f4e499]:
+                      - link "3 Months and dates Der Wievielte ist heute? · Heute ist der dritte Oktober. · Wann hast du Geburtstag?" [ref=f4e500] [cursor=pointer]:
+                        - /url: /course/u11-3
+                        - generic [ref=f4e501]: "3"
+                        - generic [ref=f4e502]:
+                          - generic [ref=f4e503]: Months and dates
+                          - generic [ref=f4e504]: Der Wievielte ist heute? · Heute ist der dritte Oktober. · Wann hast du Geburtstag?
+                        - generic [aria-hidden] [ref=f4e505]: →
+                    - listitem [ref=f4e506]:
+                      - link "4 Want, would like, may (wollen, möchten, dürfen) Ich will am Wochenende wandern. · Wir wollen ans Meer fahren. · Möchtest du mitkommen?" [ref=f4e507] [cursor=pointer]:
+                        - /url: /course/u11-4
+                        - generic [ref=f4e508]: "4"
+                        - generic [ref=f4e509]:
+                          - generic [ref=f4e510]: Want, would like, may (wollen, möchten, dürfen)
+                          - generic [ref=f4e511]: Ich will am Wochenende wandern. · Wir wollen ans Meer fahren. · Möchtest du mitkommen?
+                        - generic [aria-hidden] [ref=f4e512]: →
+            - listitem [ref=f4e513]:
+              - generic [ref=f4e514]:
+                - generic [aria-hidden] [ref=f4e515]: "12"
+                - generic [ref=f4e516]:
+                  - 'heading "Unit 12: Im Alltag" [level=2] [ref=f4e517]'
+                  - paragraph [ref=f4e518]: Fill in forms, write short notes, use the post office and bank, and invite people.
+                  - list [ref=f4e519]:
+                    - listitem [ref=f4e520]:
+                      - link "1 Filling in a form Wie ist Ihr Nachname? · Können Sie das bitte buchstabieren? · Wie ist Ihre Adresse?" [ref=f4e521] [cursor=pointer]:
+                        - /url: /course/u12-1
+                        - generic [ref=f4e522]: "1"
+                        - generic [ref=f4e523]:
+                          - generic [ref=f4e524]: Filling in a form
+                          - generic [ref=f4e525]: Wie ist Ihr Nachname? · Können Sie das bitte buchstabieren? · Wie ist Ihre Adresse?
+                        - generic [aria-hidden] [ref=f4e526]: →
+                    - listitem [ref=f4e527]:
+                      - link "2 Short messages and notes Ich komme heute etwas später. · Bin gleich zurück. · Kannst du bitte Brot kaufen?" [ref=f4e528] [cursor=pointer]:
+                        - /url: /course/u12-2
+                        - generic [ref=f4e529]: "2"
+                        - generic [ref=f4e530]:
+                          - generic [ref=f4e531]: Short messages and notes
+                          - generic [ref=f4e532]: Ich komme heute etwas später. · Bin gleich zurück. · Kannst du bitte Brot kaufen?
+                        - generic [aria-hidden] [ref=f4e533]: →
+                    - listitem [ref=f4e534]:
+                      - link "3 At the post office and the bank Ich möchte dieses Paket nach Spanien schicken. · Was kostet ein Brief nach England? · Drei Briefmarken, bitte." [ref=f4e535] [cursor=pointer]:
+                        - /url: /course/u12-3
+                        - generic [ref=f4e536]: "3"
+                        - generic [ref=f4e537]:
+                          - generic [ref=f4e538]: At the post office and the bank
+                          - generic [ref=f4e539]: Ich möchte dieses Paket nach Spanien schicken. · Was kostet ein Brief nach England? · Drei Briefmarken, bitte.
+                        - generic [aria-hidden] [ref=f4e540]: →
+                    - listitem [ref=f4e541]:
+                      - link "4 Invitations and possessives (dein, sein, ihr, unser, Ihr) Unsere Party ist am Samstag um acht Uhr. · Bring gern deine Freundin mit! · Ist das dein Fahrrad?" [ref=f4e542] [cursor=pointer]:
+                        - /url: /course/u12-4
+                        - generic [ref=f4e543]: "4"
+                        - generic [ref=f4e544]:
+                          - generic [ref=f4e545]: Invitations and possessives (dein, sein, ihr, unser, Ihr)
+                          - generic [ref=f4e546]: Unsere Party ist am Samstag um acht Uhr. · Bring gern deine Freundin mit! · Ist das dein Fahrrad?
+                        - generic [aria-hidden] [ref=f4e547]: →
+  - button "Open Next.js Dev Tools" [ref=f4e553] [cursor=pointer]
