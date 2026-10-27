@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api } from "@/lib/client";
-import { COURSE } from "@/lib/course";
+import { COURSE, unitsByLevel } from "@/lib/course";
 import type { CourseProgressDTO, GeneratedDTO } from "@/lib/schemas";
 import { AiBadge, GenerateButton } from "./GenerateButton";
 
@@ -39,10 +39,16 @@ export function AiStories({ course }: { course: CourseProgressDTO | null }) {
             Words up to
           </label>
           <select id="story-unit" className="input w-auto" value={chosen} onChange={(e) => setUnitId(e.target.value)}>
-            {units.map((u) => (
-              <option key={u.id} value={u.id}>
-                Unit {u.number}: {u.title}
-              </option>
+            {unitsByLevel().map(({ level, title, units: inLevel }) => (
+              <optgroup key={level} label={`${level} · ${title}`}>
+                {inLevel
+                  .filter((u) => u.number >= 1)
+                  .map((u) => (
+                    <option key={u.id} value={u.id}>
+                      Unit {u.number}: {u.title}
+                    </option>
+                  ))}
+              </optgroup>
             ))}
           </select>
         </div>

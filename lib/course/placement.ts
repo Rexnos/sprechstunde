@@ -1,4 +1,4 @@
-import { COURSE } from "./index";
+import { COURSE, LEVELS, type CourseLevel, type Unit } from "./index";
 import { buildExercises, rng, type Exercise } from "./exercises";
 
 export type PlacementQuestion = { unitId: string; unitNumber: number; exercise: Exercise };
@@ -6,11 +6,22 @@ export type PlacementQuestion = { unitId: string; unitNumber: number; exercise: 
 const QUESTION_KINDS = new Set<Exercise["kind"]>(["meaning", "listen", "gap"]);
 export const QUESTIONS_PER_UNIT = 3;
 
-/** Three questions per unit (Units 1–8), each from a different lesson where possible. */
-export function buildPlacement(seed: number): PlacementQuestion[] {
+const levelIndex = (level: CourseLevel) => LEVELS.findIndex((l) => l.level === level);
+
+/** Units the test covers when it starts at `from` (Unit 0, the alphabet, is never tested). */
+export const placementUnits = (from: CourseLevel = "A1"): Unit[] => COURSE.filter((u) => u.number >= 1 && levelIndex(u.level) >= levelIndex(from));
+
+/** Levels the test can start at: only those with units to test. Levels still being written are left out. */
+export const placementLevels = (): CourseLevel[] => LEVELS.map((l) => l.level).filter((level) => COURSE.some((u) => u.number >= 1 && u.level === level));
+
+/** Units below the chosen starting level: the learner says they know them, so they count as passed. */
+export const unitsBelow = (from: CourseLevel): Unit[] => COURSE.filter((u) => u.number >= 1 && levelIndex(u.level) < levelIndex(from));
+
+/** Three questions per unit from the starting level on, each from a different lesson where possible. */
+export function buildPlacement(seed: number, from: CourseLevel = "A1"): PlacementQuestion[] {
   const rand = rng(seed);
   const out: PlacementQuestion[] = [];
-  for (const unit of COURSE.filter((u) => u.number >= 1)) {
+  for (const unit of placementUnits(from)) {
     const lessons = [...unit.lessons].sort(() => rand() - 0.5);
     const picked: Exercise[] = [];
     for (let round = 0; picked.length < QUESTIONS_PER_UNIT && round < 3; round++) {
@@ -39,12 +50,12 @@ export function shouldStop(results: UnitResult[]): boolean {
 }
 
 /** Passed units are the ones before the first failed unit; start there. */
-export function placementResult(results: UnitResult[]): { passed: UnitResult[]; startUnitId: string | null } {
+export function placementResult(results: UnitResult[], from: CourseLevel = "A1"): { passed: UnitResult[]; startUnitId: string | null } {
   const passed: UnitResult[] = [];
   for (const r of results) {
     if (r.asked < QUESTIONS_PER_UNIT || !unitPassed(r)) return { passed, startUnitId: r.unitId };
     passed.push(r);
   }
-  const next = COURSE.find((u) => u.number >= 1 && !results.some((r) => r.unitId === u.id));
+  const next = placementUnits(from).find((u) => !results.some((r) => r.unitId === u.id));
   return { passed, startUnitId: next?.id ?? null };
 }

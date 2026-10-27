@@ -1,6 +1,6 @@
 import { defineUnit, p, tutor, you } from "../define";
 
-export const unit8 = defineUnit(8, "Unterwegs", "Find your way, travel by train and make appointments.", [
+export const unit8 = defineUnit(8, "A1", "Unterwegs", "Find your way, travel by train and make appointments.", [
   {
     title: "Asking the way",
     intro:
@@ -25,7 +25,7 @@ export const unit8 = defineUnit(8, "Unterwegs", "Find your way, travel by train 
   {
     title: "At the train station",
     intro:
-      "German trains show 'Gleis' (platform) numbers. A 'Fahrkarte' is a ticket; 'einfach' is one-way and 'hin und zurück' is return. 'Umsteigen' means changing trains.",
+      "German stations show 'Gleis' (platform) numbers. A 'Fahrkarte' is a ticket; 'einfach' is one-way and 'hin und zurück' is return. 'Umsteigen' means changing trains.",
     phrases: [
       p("Eine Fahrkarte nach München, bitte.", "A ticket to Munich, please.", { words: [["Fahrkarte", "ticket"], ["nach", "to (a city)"]] }),
       p("Einfach oder hin und zurück?", "One-way or return?"),
@@ -49,7 +49,7 @@ export const unit8 = defineUnit(8, "Unterwegs", "Find your way, travel by train 
       "Modal verbs like 'können' (can) and 'müssen' (must) send the main verb to the end in its basic form: 'Ich kann Deutsch sprechen.' 'Ich muss arbeiten.'",
     grammar: {
       title: "können and müssen",
-      text: "The modal verb is in position 2; the main verb goes to the end, unchanged.",
+      text: "The modal verb is in position 2; the main verb goes to the end in its basic form (infinitive).",
       table: [
         ["", "können (can)", "müssen (must)"],
         ["ich", "kann", "muss"],
@@ -91,7 +91,7 @@ export const unit8 = defineUnit(8, "Unterwegs", "Find your way, travel by train 
       tutor("Praxis Dr. Weber, guten Tag.", "Dr. Weber's practice, hello."),
       you("Guten Tag, hier ist {name}. Ich möchte einen Termin machen.", "Say who you are and that you'd like an appointment.", ["Ich möchte einen Termin machen."]),
       tutor("Passt Ihnen Donnerstag um zehn Uhr?", "Does Thursday at ten suit you?"),
-      you("Ja, das passt gut.", "Say yes, that suits you.", ["Ja, das passt.", "Ja, gern."]),
+      you("Ja, das passt gut.", "Say yes, that time suits you well.", ["Ja, das passt.", "Ja, gern."]),
       tutor("Gut. Bis Donnerstag, auf Wiederhören!", "Good. See you Thursday, goodbye!"),
       you("Auf Wiederhören!", "Say goodbye (on the phone).", ["Danke, auf Wiederhören!"]),
     ],

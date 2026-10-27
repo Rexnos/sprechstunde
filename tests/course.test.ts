@@ -1,13 +1,17 @@
 import { describe, expect, it } from "vitest";
-import { ALL_LESSONS, allPhrases, COURSE, getCourseLesson } from "@/lib/course";
+import { ALL_LESSONS, allPhrases, COURSE, getCourseLesson, LEVELS, unitsByLevel } from "@/lib/course";
 import { ALPHABET, checkSpelling, LETTERS, SPECIAL_LETTERS, spellOut } from "@/lib/course/alphabet";
 import { buildExercises, checkBuild } from "@/lib/course/exercises";
 import { scoreSpoken } from "@/lib/course/scoring";
 
 describe("course content", () => {
-  it("starts with the alphabet and has 9 units of 3–4 lessons", () => {
-    expect(COURSE).toHaveLength(9);
+  it("starts with the alphabet and has numbered units of 3–4 lessons, levels in order", () => {
     expect(COURSE[0].id).toBe("u0");
+    COURSE.forEach((u, i) => expect(u.number, u.id).toBe(i));
+    COURSE.forEach((u) => expect(u.id).toBe(`u${u.number}`));
+    const order = LEVELS.map((l) => l.level);
+    COURSE.forEach((u, i) => i > 0 && expect(order.indexOf(u.level), u.id).toBeGreaterThanOrEqual(order.indexOf(COURSE[i - 1].level)));
+    expect(unitsByLevel().flatMap((l) => l.units)).toEqual(COURSE);
     expect(COURSE[0].lessons[0].letters).toHaveLength(26);
     COURSE.forEach((u) => expect(u.lessons.length).toBeGreaterThanOrEqual(3));
     COURSE.forEach((u) => expect(u.lessons.length).toBeLessThanOrEqual(4));

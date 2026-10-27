@@ -53,9 +53,13 @@ export type CourseLesson = {
   spellWords?: string[];
 };
 
+/** CEFR level a unit belongs to. */
+export type CourseLevel = "A1" | "A2" | "B1" | "B2" | "C1";
+
 export type Unit = {
   id: string;
   number: number;
+  level: CourseLevel;
   title: string;
   goal: string;
   lessons: CourseLesson[];

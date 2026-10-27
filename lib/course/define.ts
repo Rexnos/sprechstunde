@@ -1,4 +1,4 @@
-import type { CourseLesson, DialogueLine, GrammarNote, Phrase, Unit } from "./types";
+import type { CourseLesson, CourseLevel, DialogueLine, GrammarNote, Phrase, Unit } from "./types";
 
 type PhraseInput = Omit<Phrase, "id">;
 type LessonInput = Omit<CourseLesson, "id" | "phrases" | "dialogue"> & {
@@ -13,11 +13,12 @@ export const tutor = (de: string, en: string): DialogueLine => ({ speaker: "tuto
 export const you = (de: string, en: string, accept?: string[]): DialogueLine => ({ speaker: "you", de, en, accept });
 
 /** Assigns stable ids: lesson "u2-3", phrase "u2-3-p4". */
-export function defineUnit(number: number, title: string, goal: string, lessons: LessonInput[]): Unit {
+export function defineUnit(number: number, level: CourseLevel, title: string, goal: string, lessons: LessonInput[]): Unit {
   const id = `u${number}`;
   return {
     id,
     number,
+    level,
     title,
     goal,
     lessons: lessons.map((l, li) => {

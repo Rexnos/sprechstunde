@@ -29,7 +29,10 @@ function BuiltInStories({ summary, course }: ReturnType<typeof usePracticeSummar
         return (
           <li key={st.id}>
             <Link href={`/practice/stories/${st.id}`} className="group flex items-center gap-4 py-4">
-              <span className="w-14 shrink-0 text-xs text-muted">Unit {unit.number}</span>
+              <span className="w-14 shrink-0 text-xs text-muted">
+                <span className="block font-semibold">{unit.level}</span>
+                Unit {unit.number}
+              </span>
               <span className="min-w-0 flex-1">
                 <span className="block font-semibold" lang="de">
                   {st.title}

@@ -6,8 +6,8 @@ import { useMemo, useState } from "react";
 import { useConfiguredAudio } from "@/components/audio/useConfiguredAudio";
 import { ErrorBanner, Notice } from "@/components/ui/Feedback";
 import { api, errorMessage } from "@/lib/client";
-import { getUnit } from "@/lib/course";
-import { buildPlacement, placementResult, shouldStop, type UnitResult } from "@/lib/course/placement";
+import { getUnit, LEVELS, type CourseLevel } from "@/lib/course";
+import { buildPlacement, placementLevels, placementResult, shouldStop, unitsBelow, type UnitResult } from "@/lib/course/placement";
 import { ExerciseCard } from "./ExerciseCard";
 
 type Phase = "intro" | "test" | "result";
@@ -17,7 +17,8 @@ export function PlacementTest() {
   const audio = useConfiguredAudio();
   // Questions are drawn when the test starts (not during prerendering).
   const [seed, setSeed] = useState<number | null>(null);
-  const questions = useMemo(() => (seed === null ? [] : buildPlacement(seed)), [seed]);
+  const [from, setFrom] = useState<CourseLevel>("A1");
+  const questions = useMemo(() => (seed === null ? [] : buildPlacement(seed, from)), [seed, from]);
   const [phase, setPhase] = useState<Phase>("intro");
   const [index, setIndex] = useState(0);
   const [results, setResults] = useState<UnitResult[]>([]);
@@ -39,13 +40,15 @@ export function PlacementTest() {
   }
 
   async function apply() {
-    const { passed, startUnitId } = placementResult(results);
+    const { passed, startUnitId } = placementResult(results, from);
     setApplying(true);
     setError(null);
     try {
+      // Levels below the chosen start were skipped on the learner's word; they count as passed.
+      const skipped = unitsBelow(from).map((u) => ({ unitId: u.id, score: 1 }));
       await api("/api/course/placement", {
         method: "POST",
-        json: { passed: passed.map((p) => ({ unitId: p.unitId, score: p.correct / p.asked })), startUnitId },
+        json: { passed: [...skipped, ...passed.map((p) => ({ unitId: p.unitId, score: p.correct / p.asked }))], startUnitId },
       });
       router.push("/course");
     } catch (err) {
@@ -58,8 +61,23 @@ export function PlacementTest() {
     return (
       <section className="animate-rise max-w-[65ch] space-y-5">
         <p className="text-lg">
-          About 5 minutes. You&apos;ll get a few questions from each unit, starting easy. When it gets too hard, the test stops by itself.
+          You&apos;ll get three questions from each unit{placementLevels().length > 1 && ", starting at the level you pick"}. When it gets too hard, the test stops by itself, so
+          it usually takes 5–15 minutes.
         </p>
+        {placementLevels().length > 1 && (
+          <fieldset>
+            <legend className="text-sm font-medium">Start the test at</legend>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {LEVELS.filter((l) => placementLevels().includes(l.level)).map((l) => (
+                <label key={l.level} className={`cursor-pointer rounded-full border px-3 py-1.5 text-sm ${from === l.level ? "border-accent bg-accent text-accent-ink" : "border-border hover:border-accent/50"}`}>
+                  <input type="radio" name="from" value={l.level} checked={from === l.level} onChange={() => setFrom(l.level)} className="sr-only" />
+                  {l.level} · {l.title}
+                </label>
+              ))}
+            </div>
+            <p className="mt-2 text-xs text-muted">Not sure? Start at A1. Levels below the one you pick are marked as done.</p>
+          </fieldset>
+        )}
         <ul className="list-disc space-y-1 pl-5 text-sm text-muted">
           <li>Don&apos;t guess wildly. Press “I don&apos;t know” instead, so the result is accurate.</li>
           <li>Turn your sound on: some questions are listening questions.</li>
@@ -86,7 +104,8 @@ export function PlacementTest() {
   }
 
   if (phase === "result") {
-    const { passed, startUnitId } = placementResult(results);
+    const { passed, startUnitId } = placementResult(results, from);
+    const skipped = unitsBelow(from).length;
     const start = getUnit(startUnitId ?? undefined);
     return (
       <section className="animate-rise max-w-[65ch] space-y-6">
@@ -96,9 +115,9 @@ export function PlacementTest() {
             {start ? `Start at Unit ${start.number}: ${start.title}` : "You already know everything in this course!"}
           </h2>
           <p className="mt-2 text-muted">
-            {passed.length === 0
+            {passed.length + skipped === 0
               ? "No problem: the course starts from zero, with the alphabet."
-              : `You passed ${passed.length} ${passed.length === 1 ? "unit" : "units"}. They'll be marked as done; you can still open them any time to review.`}
+              : `You passed ${passed.length} ${passed.length === 1 ? "unit" : "units"}${skipped ? ` and skipped ${skipped} below ${from}` : ""}. They'll be marked as done; you can still open them any time to review.`}
           </p>
         </div>
         <ul className="divide-y divide-border border-y border-border text-sm">
@@ -119,7 +138,7 @@ export function PlacementTest() {
         </ul>
         {error && <ErrorBanner message={error} onRetry={apply} />}
         <div className="flex flex-wrap gap-2">
-          {passed.length > 0 ? (
+          {passed.length + skipped > 0 ? (
             <button type="button" className="btn-primary" onClick={apply} disabled={applying}>
               {applying ? "Saving…" : start ? `Skip to Unit ${start.number}` : "Mark the course as done"}
             </button>
@@ -136,6 +155,18 @@ export function PlacementTest() {
     );
   }
 
+  if (!q) {
+    // No questions for this level (shouldn't happen: only levels with units are offered).
+    return (
+      <section className="max-w-[65ch] space-y-4">
+        <Notice>There are no units to test at {from} yet.</Notice>
+        <button type="button" className="btn-secondary" onClick={() => setPhase("intro")}>
+          Pick another level
+        </button>
+      </section>
+    );
+  }
+
   const unitNumbers = [...new Set(questions.map((x) => x.unitNumber))];
   return (
     <section className="space-y-6">
@@ -144,7 +175,7 @@ export function PlacementTest() {
           <div className="h-full rounded-full bg-accent transition-[width] duration-500" style={{ width: `${(index / questions.length) * 100}%` }} />
         </div>
         <span className="text-xs text-muted tabular-nums">
-          Unit {q.unitNumber} of {unitNumbers.length}
+          Unit {q.unitNumber} · {unitNumbers.indexOf(q.unitNumber) + 1} of {unitNumbers.length} units
         </span>
       </div>
       {audio.notice && <Notice>{audio.notice}</Notice>}

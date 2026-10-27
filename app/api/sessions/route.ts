@@ -1,6 +1,6 @@
 import { handle, readJson } from "@/lib/api";
 import { BadRequestError } from "@/lib/errors";
-import { getUnit } from "@/lib/course";
+import { getUnit, LEVELS } from "@/lib/course";
 import { getLesson, MODE_LABELS } from "@/lib/lessons";
 import { TUTOR_PROMPT_VERSION } from "@/lib/prompts";
 import { CreateSessionSchema } from "@/lib/schemas";
@@ -34,9 +34,18 @@ export const POST = handle(async (request: Request) => {
     title,
     lessonId: lesson?.id,
     courseUnitId: unit?.id,
+    // A unit review is pitched at the unit's level, but never below the learner's own.
+    level: unit && LEVELS.findIndex((l) => l.level === unit.level) > LEVELS.findIndex((l) => l.level === profile.level) ? unit.level : undefined,
     promptVersion: TUTOR_PROMPT_VERSION,
-    // Beginners get an opening question so they never face a blank screen.
-    starter: body.mode === "roleplay" ? lesson?.starter : unit ? "Hallo! Wie geht's?" : undefined,
+    // Unit reviews get an opening question so learners never face a blank screen.
+    starter:
+      body.mode === "roleplay"
+        ? lesson?.starter
+        : unit
+          ? unit.level === "A1"
+            ? "Hallo! Wie geht's?"
+            : `Hallo! Heute sprechen wir über das Thema „${unit.title}“. Bist du bereit?`
+          : undefined,
   });
   return Response.json({ session: sessionDTO(session) }, { status: 201 });
 });

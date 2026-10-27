@@ -105,7 +105,7 @@ export const PracticeResultSchema = z.object({
 
 export const PlacementApplySchema = z.object({
   /** Units the learner passed, with their placement score. */
-  passed: z.array(z.object({ unitId: z.string().max(10), score: z.number().min(0).max(1) })).max(20),
+  passed: z.array(z.object({ unitId: z.string().max(10), score: z.number().min(0).max(1) })).max(100),
   startUnitId: z.string().max(10).nullable(),
 });
 

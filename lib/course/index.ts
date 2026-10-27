@@ -1,18 +1,27 @@
-import type { CourseLesson, Phrase, Unit } from "./types";
-import { unit0 } from "./units/u0-alphabet";
-import { unit1 } from "./units/u1-hallo";
-import { unit2 } from "./units/u2-ich-bin";
-import { unit3 } from "./units/u3-zahlen";
-import { unit4 } from "./units/u4-cafe";
-import { unit5 } from "./units/u5-einkaufen";
-import { unit6 } from "./units/u6-familie";
-import { unit7 } from "./units/u7-mein-tag";
-import { unit8 } from "./units/u8-unterwegs";
+import type { CourseLesson, CourseLevel, Phrase, Unit } from "./types";
+import { A1_UNITS } from "./units/a1";
+import { A2_UNITS } from "./units/a2";
+import { B1_UNITS } from "./units/b1";
+import { B2_UNITS } from "./units/b2";
+import { C1_UNITS } from "./units/c1";
 
-export type { CourseLesson, DialogueLine, GrammarNote, LetterCard, Phrase, Unit } from "./types";
+export type { CourseLesson, CourseLevel, DialogueLine, GrammarNote, LetterCard, Phrase, Unit } from "./types";
 
-/** The beginner course, A0 → A1, starting with the alphabet. Hand-written content; see lib/course/units/. */
-export const COURSE: Unit[] = [unit0, unit1, unit2, unit3, unit4, unit5, unit6, unit7, unit8];
+/** The full course, A0 → C1, starting with the alphabet. Hand-written content; see lib/course/units/. */
+export const COURSE: Unit[] = [...A1_UNITS, ...A2_UNITS, ...B1_UNITS, ...B2_UNITS, ...C1_UNITS];
+
+export const LEVELS: { level: CourseLevel; title: string; summary: string }[] = [
+  { level: "A1", title: "Beginner", summary: "The alphabet, introductions, numbers, shopping, family, daily routine and getting around." },
+  { level: "A2", title: "Elementary", summary: "Talk about the past, give reasons, compare, and handle everyday errands and travel." },
+  { level: "B1", title: "Intermediate", summary: "Tell stories, give opinions, and get by at work, in education and in society." },
+  { level: "B2", title: "Upper intermediate", summary: "Discuss abstract topics fluently, report what others said and write formally." },
+  { level: "C1", title: "Advanced", summary: "Precise, idiomatic German for academic, professional and cultural contexts." },
+];
+
+/** Course units grouped by CEFR level, in course order (levels with no units are left out). */
+export function unitsByLevel(): { level: CourseLevel; title: string; summary: string; units: Unit[] }[] {
+  return LEVELS.map((l) => ({ ...l, units: COURSE.filter((u) => u.level === l.level) })).filter((l) => l.units.length > 0);
+}
 
 export const ALL_LESSONS: { unit: Unit; lesson: CourseLesson }[] = COURSE.flatMap((unit) => unit.lessons.map((lesson) => ({ unit, lesson })));
 

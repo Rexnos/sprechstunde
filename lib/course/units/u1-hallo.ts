@@ -1,6 +1,6 @@
 import { defineUnit, p, tutor, you } from "../define";
 
-export const unit1 = defineUnit(1, "Hallo!", "Say hello and goodbye, be polite, and ask how someone is.", [
+export const unit1 = defineUnit(1, "A1", "Hallo!", "Say hello and goodbye, be polite, and ask how someone is.", [
   {
     title: "Hello and goodbye",
     intro:
@@ -9,7 +9,7 @@ export const unit1 = defineUnit(1, "Hallo!", "Say hello and goodbye, be polite, 
       p("Guten Morgen!", "Good morning!", { words: [["Guten", "good"], ["Morgen", "morning"]] }),
       p("Guten Tag!", "Hello! (Good day)", { note: "Polite greeting, used from late morning to early evening." }),
       p("Guten Abend!", "Good evening!", { words: [["Guten", "good"], ["Abend", "evening"]] }),
-      p("Gute Nacht!", "Good night!", { note: "Only when someone is going to bed." }),
+      p("Gute Nacht!", "Good night!", { note: "Only when someone is going to bed, or as a goodbye late at night." }),
       p("Tschüss!", "Bye!", { note: "Casual. With friends, family, in shops." }),
       p("Auf Wiedersehen!", "Goodbye!", { words: [["auf", "on"], ["Wiedersehen", "seeing again"]], note: "Polite and a little formal." }),
       p("Bis morgen!", "See you tomorrow!", { words: [["bis", "until"], ["morgen", "tomorrow"]] }),

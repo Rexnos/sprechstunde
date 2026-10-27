@@ -78,7 +78,7 @@ export function Dashboard() {
           {hour === null ? "Hallo" : greeting(hour)}
           {settings?.displayName && settings.displayName !== "Learner" ? `, ${settings.displayName}` : ""}.
         </h1>
-        <div className="mt-3 max-w-md">
+        <div className="mt-4 max-w-md">
           <p className="text-muted">
             {goalDone
               ? `Daily goal reached: ${minutes} minutes today. Schön!`
@@ -86,16 +86,7 @@ export function Dashboard() {
                 ? `Your daily goal is ${goalMinutes} minutes of speaking.`
                 : `${minutes} of ${goalMinutes} minutes today, ${turns} ${turns === 1 ? "turn" : "turns"} so far.`}
           </p>
-          <div
-            className="mt-2 h-1.5 overflow-hidden rounded-full bg-surface-2"
-            role="progressbar"
-            aria-valuenow={goalPct}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-label="Daily goal"
-          >
-            <div className={`h-full rounded-full transition-[width] duration-700 ${goalDone ? "bg-ok" : "bg-accent"}`} style={{ width: `${goalPct}%` }} />
-          </div>
+          <GoalMeter minutes={minutes} goal={goalMinutes} pct={goalPct} done={goalDone} />
         </div>
       </section>
 
@@ -245,12 +236,39 @@ export function Dashboard() {
   );
 }
 
+function GoalMeter({ minutes, goal, pct, done }: { minutes: number; goal: number; pct: number; done: boolean }) {
+  // One tick per minute keeps an empty day from looking like a broken bar; long goals fall back to a bar.
+  const ticks = goal <= 30 ? goal : 0;
+  return (
+    <div className="mt-2.5 flex items-center gap-3" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Daily goal">
+      {ticks ? (
+        <div className="flex flex-1 gap-1">
+          {Array.from({ length: ticks }, (_, i) => (
+            <span
+              key={i}
+              className={`h-2 flex-1 rounded-full transition-colors duration-500 ${i < minutes ? (done ? "bg-ok" : "bg-accent") : "bg-surface-2 ring-1 ring-border/60 ring-inset"}`}
+              style={{ transitionDelay: `${i * 30}ms` }}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="h-2 flex-1 overflow-hidden rounded-full bg-surface-2">
+          <div className={`h-full rounded-full transition-[width] duration-700 ${done ? "bg-ok" : "bg-accent"}`} style={{ width: `${pct}%` }} />
+        </div>
+      )}
+      <span className="shrink-0 text-xs text-muted tabular-nums">
+        {Math.min(minutes, goal)}/{goal} min
+      </span>
+    </div>
+  );
+}
+
 function CheckupCard({ status }: { status: CheckupStatusDTO }) {
   const last = status.history.at(-1);
   return (
-    <section aria-labelledby="checkup-card-h" className="flex flex-wrap items-center gap-4 rounded-3xl border border-border p-6">
+    <section aria-labelledby="checkup-card-h" className="flex flex-wrap items-center gap-x-6 gap-y-4 rounded-3xl border border-border bg-surface p-6">
       <div className="min-w-0 flex-1">
-        <p className="text-xs font-semibold text-accent">Weekly check-up</p>
+        <p className="eyebrow">Weekly check-up</p>
         <h2 id="checkup-card-h" className="mt-1 text-xl font-semibold">
           This week&apos;s check-up is ready
         </h2>
@@ -259,7 +277,7 @@ function CheckupCard({ status }: { status: CheckupStatusDTO }) {
           {last && ` Last time: ${Math.round(last.score * 100)}%.`}
         </p>
       </div>
-      <Link href="/progress/check-up" className="btn-primary">
+      <Link href="/progress/check-up" className="btn-ink">
         Take the check-up
       </Link>
     </section>
@@ -270,34 +288,54 @@ function CourseCard({ course, isNew }: { course: CourseProgressDTO; isNew: boole
   const next = getCourseLesson(course.nextLessonId!);
   if (!next) return null;
   const fresh = course.completed === 0;
+  const pct = Math.round((course.completed / course.total) * 100);
   return (
-    <section aria-labelledby="course-h" className="rounded-3xl bg-accent-soft p-6">
-      <p className="text-xs font-semibold text-accent">{fresh ? "Beginner course" : `Course · ${course.completed} of ${course.total} lessons`}</p>
-      <h2 id="course-h" className="mt-1 text-xl font-semibold">
-        {fresh && isNew ? "New to German? Start from zero." : `Unit ${next.unit.number}: ${next.lesson.title}`}
-      </h2>
-      <p className="mt-1 max-w-[60ch] text-sm">
-        {fresh
-          ? "Begin with the German alphabet and its sounds, then short lessons with audio, exercises and speaking practice. No German needed."
-          : `Next up in “${next.unit.title}”: ${next.lesson.phrases
-              .slice(0, 2)
-              .map((p) => p.de)
-              .join(" · ")}`}
-      </p>
-      {!fresh && (
-        <div className="mt-3 h-1.5 max-w-sm overflow-hidden rounded-full bg-surface/70">
-          <div className="h-full rounded-full bg-accent" style={{ width: `${(course.completed / course.total) * 100}%` }} />
-        </div>
-      )}
-      <div className="mt-4 flex flex-wrap items-center gap-3">
-        <Link href={`/course/${next.lesson.id}`} className="btn-primary">
-          {fresh ? "Start with the alphabet" : "Continue course"}
-        </Link>
-        {fresh && (
-          <Link href="/course/placement" className="text-sm underline-offset-2 hover:underline">
-            Know some German? Take the placement test
-          </Link>
+    <section aria-labelledby="course-h" className="grid gap-x-6 gap-y-4 rounded-3xl border border-border bg-surface p-6 sm:grid-cols-[auto_1fr] sm:p-7">
+      <div
+        className="grid size-16 place-items-center rounded-2xl bg-accent-soft font-[family-name:var(--font-display)] text-accent sm:size-24"
+        aria-hidden
+        lang="de"
+      >
+        {next.unit.number === 0 ? <span className="text-2xl font-semibold sm:text-4xl">Aa</span> : <span className="text-3xl font-semibold tabular-nums sm:text-5xl">{next.unit.number}</span>}
+      </div>
+      <div className="min-w-0">
+        <p className="eyebrow">{fresh ? "German course" : `Course · ${next.unit.level} · Unit ${next.unit.number}`}</p>
+        <h2 id="course-h" className="mt-1 text-xl font-semibold sm:text-2xl">
+          {fresh && isNew ? "New to German? Start from zero." : next.lesson.title}
+        </h2>
+        <p className="mt-1 max-w-[60ch] text-sm text-muted">
+          {fresh
+            ? "Begin with the German alphabet and its sounds, then short lessons with audio, exercises and speaking practice. No German needed."
+            : <>
+                Next up in “{next.unit.title}”:{" "}
+                <span className="text-ink" lang="de">
+                  {next.lesson.phrases
+                    .slice(0, 2)
+                    .map((p) => p.de)
+                    .join(" · ")}
+                </span>
+              </>}
+        </p>
+        {!fresh && (
+          <div className="mt-4 flex max-w-sm items-center gap-3">
+            <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-surface-2">
+              <div className="h-full rounded-full bg-ink" style={{ width: `${pct}%` }} />
+            </div>
+            <span className="text-xs text-muted tabular-nums">
+              {course.completed}/{course.total} lessons
+            </span>
+          </div>
         )}
+        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <Link href={`/course/${next.lesson.id}`} className="btn-ink">
+            {fresh ? "Start with the alphabet" : "Continue course"} <span aria-hidden>→</span>
+          </Link>
+          {fresh && (
+            <Link href="/course/placement" className="text-sm text-muted underline-offset-2 hover:text-ink hover:underline">
+              Know some German? Take the placement test
+            </Link>
+          )}
+        </div>
       </div>
     </section>
   );

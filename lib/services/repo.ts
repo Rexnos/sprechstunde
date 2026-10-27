@@ -23,7 +23,7 @@ import {
   type VocabDTO,
   type VocabItem,
 } from "../schemas";
-import { ALL_LESSONS, getCourseLesson } from "../course";
+import { ALL_LESSONS, COURSE, getCourseLesson, getUnit, LEVELS } from "../course";
 import { weekKey, weekStart, type CheckupPools } from "../checkup/build";
 import type { Phrase } from "../course/types";
 import { scheduleReview, termKey, type ReviewResult } from "./review";
@@ -194,6 +194,8 @@ export async function createSession(input: {
   title: string;
   lessonId?: string;
   courseUnitId?: string;
+  /** Overrides the profile's level (course unit calls use the unit's level). */
+  level?: Level;
   promptVersion: string;
   /** Optional opening line from the tutor (e.g. a role-play starter). */
   starter?: string;
@@ -208,7 +210,7 @@ export async function createSession(input: {
     lessonId: input.lessonId,
     courseUnitId: input.courseUnitId,
     targetLanguage: input.profile.targetLanguage,
-    level: input.profile.level,
+    level: input.level ?? input.profile.level,
     status: "active",
     startedAt: now,
     lastActivityAt: now,
@@ -625,9 +627,12 @@ export async function applyPlacement(profileId: ObjectId, passed: { unitId: stri
     },
   }));
   if (ops.length) await col.courseProgress(db).bulkWrite(ops, { ordered: false });
-  await recordPracticeResult(profileId, "placement", startUnitId ?? "done", passed.length / 8);
-  // Everything passed: the learner is beyond A1.
-  if (passed.length >= 8) await col.profiles(db).updateOne({ _id: profileId }, { $set: { level: "A2", updatedAt: now } });
+  await recordPracticeResult(profileId, "placement", startUnitId ?? "done", passed.length / COURSE.filter((u) => u.number >= 1).length);
+  // The tutor's level follows the placement: the level of the unit to start at (C1 when everything passed). Never lowered.
+  const level = startUnitId ? getUnit(startUnitId)!.level : "C1";
+  const rank = (l: string) => LEVELS.findIndex((x) => x.level === l);
+  const profile = await col.profiles(db).findOne({ _id: profileId }, { projection: { level: 1 } });
+  if (passed.length && rank(level) > rank(profile?.level ?? "A1")) await col.profiles(db).updateOne({ _id: profileId }, { $set: { level, updatedAt: now } });
 }
 
 // ---------- Practice results (dictation, pronunciation, stories, placement) ----------

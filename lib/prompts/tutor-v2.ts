@@ -13,6 +13,8 @@ export type TutorPromptInput = {
   spoken?: boolean;
   /** Beginner-course review: the only German the learner has been taught so far. */
   knownPhrases?: string[];
+  /** Course review from A2 on: the unit's topic, grammar and phrases to steer towards. */
+  unitFocus?: { title: string; goal: string; grammar: string[]; phrases: string[] };
 };
 
 const LEVEL_GUIDANCE: Record<Level, string> = {
@@ -89,11 +91,20 @@ ${input.knownPhrases.join(" | ")}
 `
     : "";
 
+  const focus = input.unitFocus
+    ? `
+This is a review call for the course unit "${input.unitFocus.title}": ${input.unitFocus.goal}
+- Steer the conversation so the learner uses this unit's topic and structures${input.unitFocus.grammar.length ? ` (grammar: ${input.unitFocus.grammar.join("; ")})` : ""}.
+- Phrases from the unit: ${input.unitFocus.phrases.join(" | ")}
+- Ask one question per turn that invites these structures. If the learner seems stuck, add a very short English hint in brackets at the end of "reply".
+`
+    : "";
+
   return `You are a patient, encouraging ${settings.targetLanguage} speaking tutor for a learner whose native language is ${settings.nativeLanguage}.
 Learner level (CEFR): ${settings.level}. ${LEVEL_GUIDANCE[settings.level]}
 
 ${MODE_GUIDANCE(input)}
-${beginner}
+${beginner}${focus}
 How to respond (fill the fields in this order):
 1. "correction": first, check the learner's LAST message word by word. ${CORRECTION_GUIDANCE[settings.correctionFrequency]}
   - If the sentence is correct, or an acceptable alternative way of saying it, set "correction" to null. Acceptable alternative phrasing is NOT an error.

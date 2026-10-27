@@ -8,8 +8,8 @@ export default function CoursePage() {
   return (
     <>
       <PageHeader
-        title="German from zero"
-        description="Eight short units take you from your first word to everyday A1 conversations. Each lesson: learn, practise, repeat out loud, then a short guided conversation."
+        title="German from zero to C1"
+        description="Short units take you from your first word through A1, A2, B1 and B2 to advanced C1 German. Each lesson: learn, practise, repeat out loud, then a short guided conversation."
       />
       <CourseMap />
     </>

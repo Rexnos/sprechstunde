@@ -1,6 +1,6 @@
 import { defineUnit, p, tutor, you } from "../define";
 
-export const unit3 = defineUnit(3, "Zahlen und Zeit", "Count, say your age and phone number, tell the time and name the days.", [
+export const unit3 = defineUnit(3, "A1", "Zahlen und Zeit", "Count, say your age and phone number, tell the time and name the days.", [
   {
     title: "Numbers 0 to 20",
     intro:

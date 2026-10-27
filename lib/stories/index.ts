@@ -1,27 +1,17 @@
-// Short original A1 stories, one per course unit, read aloud by the local voice.
+// Short original stories, one per course unit, read aloud by the local voice.
 // Every non-function word has a glossary entry so tapping any word shows a meaning.
+// Units 1–8 are below; later units are in a1.ts, a2.ts, b1.ts, b2.ts and c1.ts.
 
-export type StorySentence = { de: string; en: string };
-export type StoryQuestion = { q: string; options: string[]; answer: string };
-export type Story = {
-  id: string;
-  unitId: string;
-  title: string;
-  blurb: string;
-  sentences: StorySentence[];
-  glossary: Record<string, string>;
-  questions: StoryQuestion[];
-};
+import { q, s, type Story } from "./define";
+import { STORIES_A1 } from "./a1";
+import { STORIES_A2 } from "./a2";
+import { STORIES_B1 } from "./b1";
+import { STORIES_B2 } from "./b2";
+import { STORIES_C1 } from "./c1";
 
-/** Small words learners meet everywhere; they don't need a glossary entry. */
-export const FUNCTION_WORDS = new Set(
-  "ich du er sie es wir ihr und oder aber der die das den dem ein eine einen ist bin bist sind nicht auch sehr ja nein in im ins mit zu zum zur am an auf aus von bei nach um für so dann noch hier was wie wo".split(" "),
-);
+export { FUNCTION_WORDS, type Story, type StoryQuestion, type StorySentence } from "./define";
 
-const s = (de: string, en: string): StorySentence => ({ de, en });
-const q = (question: string, answer: string, ...others: string[]): StoryQuestion => ({ q: question, options: [answer, ...others], answer });
-
-export const STORIES: Story[] = [
+const STORIES_BASIC: Story[] = [
   {
     id: "guten-morgen",
     unitId: "u1",
@@ -37,7 +27,7 @@ export const STORIES: Story[] = [
       s("Am Abend sagt Anna: „Tschüss! Bis morgen!“", "In the evening Anna says: “Bye! See you tomorrow!”"),
     ],
     glossary: {
-      montag: "Monday", anna: "Anna (name)", geht: "goes", arbeit: "work", sieht: "sees", herrn: "Mr (after a verb)", braun: "Braun (surname)",
+      montag: "Monday", anna: "Anna (name)", geht: "goes", arbeit: "work", sieht: "sees", herrn: "Mr (form used as the object)", braun: "Braun (surname)",
       guten: "good", morgen: "morning; tomorrow", herr: "Mr", ihnen: "you (polite)", gut: "good", danke: "thanks", abend: "evening",
       sagt: "says", tschüss: "bye", bis: "until, see you",
     },
@@ -175,7 +165,7 @@ export const STORIES: Story[] = [
     },
     questions: [
       q("How many brothers and sisters does the speaker have?", "Two", "One", "None"),
-      q("How old is her sister?", "10", "12", "20"),
+      q("How old is the speaker's sister?", "10", "12", "20"),
       q("What does the family do on Sunday?", "They cook together", "They go to the cinema", "They work"),
     ],
   },
@@ -234,6 +224,8 @@ export const STORIES: Story[] = [
     ],
   },
 ];
+
+export const STORIES: Story[] = [...STORIES_BASIC, ...STORIES_A1, ...STORIES_A2, ...STORIES_B1, ...STORIES_B2, ...STORIES_C1];
 
 export function getStory(id: string): Story | undefined {
   return STORIES.find((st) => st.id === id);

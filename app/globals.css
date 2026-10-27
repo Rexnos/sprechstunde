@@ -191,6 +191,10 @@ h3 {
 @utility btn-primary {
   @apply btn bg-accent text-accent-ink hover:brightness-105;
 }
+/* Strong but not vermilion: for "next step" actions that sit beside a speaking action. */
+@utility btn-ink {
+  @apply btn bg-ink text-bg hover:opacity-90;
+}
 @utility btn-secondary {
   @apply btn border border-border bg-surface text-ink hover:bg-surface-2;
 }

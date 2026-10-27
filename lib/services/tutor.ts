@@ -1,6 +1,6 @@
 import "server-only";
 import { env } from "../env";
-import { allPhrases } from "../course";
+import { allPhrases, getUnit } from "../course";
 import { getLesson } from "../lessons";
 import { chatJson, type ChatMessage } from "../ollama";
 import { buildTutorSystemPrompt } from "../prompts";
@@ -25,6 +25,7 @@ export async function prepareTurn(input: { profile: ProfileDoc; session: Session
   const userAt = new Date();
   const model = profile.model || env().OLLAMA_MODEL;
   const lesson = getLesson(session.lessonId);
+  const unit = getUnit(session.courseUnitId);
 
   const [history, practice] = await Promise.all([
     listMessages(session._id, HISTORY_MESSAGES),
@@ -37,7 +38,17 @@ export async function prepareTurn(input: { profile: ProfileDoc; session: Session
     lesson,
     practiceTerms: practice.map((v) => ({ term: v.term, meaning: v.meaning })),
     spoken: input.spoken,
-    knownPhrases: session.courseUnitId ? allPhrases(session.courseUnitId).map((ph) => ph.de) : undefined,
+    // A1 reviews stick to what has been taught; later units steer towards the unit's material.
+    knownPhrases: unit?.level === "A1" ? allPhrases(unit.id).map((ph) => ph.de) : undefined,
+    unitFocus:
+      unit && unit.level !== "A1"
+        ? {
+            title: unit.title,
+            goal: unit.goal,
+            grammar: unit.lessons.flatMap((l) => (l.grammar ? [l.grammar.title] : [])),
+            phrases: unit.lessons.flatMap((l) => l.phrases.map((ph) => ph.de)),
+          }
+        : undefined,
   });
 
   const messages: ChatMessage[] = [

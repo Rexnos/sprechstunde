@@ -1,6 +1,6 @@
 import { defineUnit, p, tutor, you } from "../define";
 
-export const unit4 = defineUnit(4, "Im Café", "Order food and drinks, ask about prices and pay.", [
+export const unit4 = defineUnit(4, "A1", "Im Café", "Order food and drinks, ask about prices and pay.", [
   {
     title: "Ordering a drink",
     intro:
@@ -56,7 +56,7 @@ export const unit4 = defineUnit(4, "Im Café", "Order food and drinks, ask about
   {
     title: "How much is it?",
     intro:
-      "Prices are said as euros and cents: 3,50 € is 'drei Euro fünfzig'. 'Was kostet …?' asks the price of one thing; 'Wie viel kostet das?' works for anything.",
+      "Prices are said as euros and cents: 3,50 € is 'drei Euro fünfzig'. Both 'Was kostet …?' and 'Wie viel kostet …?' ask the price.",
     phrases: [
       p("Was kostet der Kaffee?", "How much is the coffee?", { words: [["was kostet", "what costs"]] }),
       p("Wie viel kostet das?", "How much does that cost?"),

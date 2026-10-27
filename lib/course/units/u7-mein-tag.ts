@@ -1,6 +1,6 @@
 import { defineUnit, p, tutor, you } from "../define";
 
-export const unit7 = defineUnit(7, "Mein Tag", "Describe your daily routine and make plans with times and days.", [
+export const unit7 = defineUnit(7, "A1", "Mein Tag", "Describe your daily routine and make plans with times and days.", [
   {
     title: "My morning",
     intro:

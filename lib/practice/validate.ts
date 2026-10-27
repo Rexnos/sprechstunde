@@ -55,12 +55,12 @@ export type StoryCheck = { ok: true; story: Omit<Story, "id" | "unitId"> } | { o
  * Checks a generated story. `dict` (German → English) fills glossary gaps the model
  * left; coverage is measured after filling.
  */
-export function validateStory(raw: unknown, stems: Set<string>, dict: Map<string, string> = new Map()): StoryCheck {
+export function validateStory(raw: unknown, stems: Set<string>, dict: Map<string, string> = new Map(), maxWords = STORY_LIMITS.maxWords): StoryCheck {
   const parsed = GeneratedStorySchema.safeParse(raw);
   if (!parsed.success) return { ok: false, problems: ["The output didn't match the story format."], unknown: [] };
   const st = parsed.data;
   const problems: string[] = [];
-  const L = STORY_LIMITS;
+  const L = { ...STORY_LIMITS, maxWords };
 
   if (st.sentences.length < L.minSentences || st.sentences.length > L.maxSentences)
     problems.push(`Write ${L.minSentences}–${L.maxSentences} sentences (got ${st.sentences.length}).`);

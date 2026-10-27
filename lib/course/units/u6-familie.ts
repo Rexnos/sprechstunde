@@ -1,6 +1,6 @@
 import { defineUnit, p, tutor, you } from "../define";
 
-export const unit6 = defineUnit(6, "Familie und Freunde", "Talk about your family and friends and describe people.", [
+export const unit6 = defineUnit(6, "A1", "Familie und Freunde", "Talk about your family and friends and describe people.", [
   {
     title: "My family",
     intro:
@@ -38,7 +38,7 @@ export const unit6 = defineUnit(6, "Familie und Freunde", "Talk about your famil
       "'Haben' is the second most important verb after 'sein'. It's used for owning things, for family, and later to build the past tense.",
     grammar: {
       title: "haben (to have)",
-      text: "Slightly irregular in the du form.",
+      text: "Slightly irregular in the du and er/sie forms: du hast, er hat.",
       table: [
         ["ich habe", "I have"],
         ["du hast", "you have (casual)"],

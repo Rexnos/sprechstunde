@@ -1,6 +1,6 @@
 import { defineUnit, p, tutor, you } from "../define";
 
-export const unit2 = defineUnit(2, "Ich bin …", "Introduce yourself: your name, where you're from, where you live, what you do.", [
+export const unit2 = defineUnit(2, "A1", "Ich bin …", "Introduce yourself: your name, where you're from, where you live, what you do.", [
   {
     title: "My name is …",
     intro:
@@ -37,9 +37,9 @@ export const unit2 = defineUnit(2, "Ich bin …", "Introduce yourself: your name
     dialogue: [
       tutor("Woher kommst du?", "Where are you from?"),
       you("Ich komme aus {country}.", "Say where you're from."),
-      tutor("Ah, interessant! Ich komme aus Deutschland.", "Ah, interesting! I'm from Germany."),
+      tutor("Ah, interessant!", "Ah, interesting!"),
       you("Und du? Woher kommst du?", "Ask her back where she's from (casual).", ["Woher kommst du?", "Und du?"]),
-      tutor("Aus Berlin.", "From Berlin."),
+      tutor("Ich komme aus Deutschland, aus Berlin.", "I'm from Germany, from Berlin."),
     ],
   },
   {
@@ -48,7 +48,7 @@ export const unit2 = defineUnit(2, "Ich bin …", "Introduce yourself: your name
       "German verbs change their ending with the person. For most verbs: ich + -e, du + -st, Sie + -en. Learn this pattern once and it works for hundreds of verbs.",
     grammar: {
       title: "Verb endings (present tense)",
-      text: "Take the verb stem (wohn-, sprech-, komm-) and add the ending.",
+      text: "Take the verb stem (wohn-, komm-, lern-) and add the ending.",
       table: [
         ["", "wohnen (live)", "kommen (come)", "ending"],
         ["ich", "wohne", "komme", "-e"],
@@ -102,7 +102,7 @@ export const unit2 = defineUnit(2, "Ich bin …", "Introduce yourself: your name
       tutor("Interessant! Und wo arbeitest du?", "Interesting! And where do you work?"),
       you("Ich arbeite in einer Firma.", "Say you work at a company.", ["In einer Firma."]),
       tutor("Ich bin Lehrerin.", "I'm a teacher."),
-      you("Freut mich!", "Say nice to meet you.", ["Schön!", "Toll!"]),
+      you("Oh, interessant!", "Say: oh, interesting!", ["Interessant!", "Schön!", "Toll!"]),
     ],
   },
 ]);

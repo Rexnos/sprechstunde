@@ -1,6 +1,6 @@
 import { defineUnit, p, tutor, you } from "../define";
 
-export const unit5 = defineUnit(5, "Einkaufen", "Shop for food and clothes: ask for things, colours, sizes and quantities.", [
+export const unit5 = defineUnit(5, "A1", "Einkaufen", "Shop for food and clothes: ask for things, colours, sizes and quantities.", [
   {
     title: "At the supermarket",
     intro:
@@ -80,13 +80,13 @@ export const unit5 = defineUnit(5, "Einkaufen", "Shop for food and clothes: ask 
   {
     title: "Buying and deciding",
     intro:
-      "To decide, say 'Ich nehme es' (I'll take it) or 'Ich überlege noch' (I'm still thinking). 'Nur schauen' politely tells a shop assistant you're just looking.",
+      "To decide, say 'Ich nehme es' (I'll take it) or 'Ich überlege noch' (I'm still thinking). 'Ich schaue nur' politely tells a shop assistant you're just looking.",
     phrases: [
       p("Ich schaue nur, danke.", "I'm just looking, thanks.", { words: [["schaue", "look"], ["nur", "only"]] }),
       p("Ich nehme sie.", "I'll take it. (for a die-word like die Jacke)", { note: "Use 'ihn' for der-words and 'es' for das-words: Ich nehme ihn / es." }),
       p("Ich überlege noch.", "I'm still thinking about it."),
       p("Was kostet die Jacke?", "How much is the jacket?"),
-      p("Gibt es das im Angebot?", "Is that on sale?", { words: [["im Angebot", "on offer"]] }),
+      p("Ist das im Angebot?", "Is that on sale?", { words: [["im Angebot", "on offer"]] }),
       p("Kann ich das umtauschen?", "Can I exchange it?", { words: [["umtauschen", "exchange"]] }),
     ],
     dialogue: [

@@ -143,7 +143,7 @@ function CourseSummary() {
     <section aria-labelledby="course-sum-h" className="flex flex-wrap items-center gap-x-8 gap-y-3">
       <div className="min-w-48 flex-1">
         <h2 id="course-sum-h" className="font-semibold">
-          Beginner course
+          German course
         </h2>
         <p className="text-sm text-muted">
           {course.completed} of {course.total} lessons

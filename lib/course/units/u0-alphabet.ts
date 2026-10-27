@@ -1,7 +1,7 @@
 import { LETTERS, SPECIAL_LETTERS } from "../alphabet";
 import { defineUnit, p, tutor, you } from "../define";
 
-export const unit0 = defineUnit(0, "Das Alphabet", "Learn the letters, how German sounds, and how to spell your name.", [
+export const unit0 = defineUnit(0, "A1", "Das Alphabet", "Learn the letters, how German sounds, and how to spell your name.", [
   {
     title: "The letters A to Z",
     intro:
@@ -60,18 +60,18 @@ export const unit0 = defineUnit(0, "Das Alphabet", "Learn the letters, how Germa
       p("Tag", "day", { note: "b, d, g at the end of a word sound like p, t, k: Tag = 'tahk'." }),
     ],
     dialogue: [
-      tutor("Hallo! Schön!", "Hello! Nice!"),
+      tutor("Hallo! Wie schön!", "Hello! How nice!"),
       you("Schön!", "Say: nice! (Round your lips for ö.)"),
       tutor("Wein oder Bier?", "Wine or beer?"),
       you("Wein, bitte.", "Choose wine, please. (ei = 'eye')", ["Bier, bitte.", "Wein.", "Bier."]),
       tutor("Heute ist ein schöner Tag.", "Today is a beautiful day."),
-      you("Ja, heute ist ein schöner Tag.", "Agree: yes, today is a beautiful day.", ["Ja!", "Ja, heute ist schön."]),
+      you("Ja, heute ist ein schöner Tag.", "Agree: yes, today is a beautiful day.", ["Ja!", "Ja, heute ist es schön."]),
     ],
   },
   {
     title: "Spelling: Wie schreibt man das?",
     intro:
-      "In Germany you'll often be asked to spell your name, on the phone, at a doctor's office, or at a hotel. You say each letter's German name, or use words: 'M wie Mutter'. For ä, ö, ü people say 'A-Umlaut', 'O-Umlaut', 'U-Umlaut'.",
+      "In Germany you'll often be asked to spell your name: on the phone, at a doctor's office, or at a hotel. You say each letter's German name, or use words: 'M wie Mutter'. For ä, ö, ü people say 'A-Umlaut', 'O-Umlaut', 'U-Umlaut'.",
     spellWords: ["Max", "Lena", "Anna", "Berlin", "Köln", "Weber", "Müller"],
     phrases: [
       p("Wie schreibt man das?", "How do you spell that?", { words: [["wie", "how"], ["schreibt", "writes"], ["man", "one"], ["das", "that"]] }),
@@ -88,7 +88,7 @@ export const unit0 = defineUnit(0, "Das Alphabet", "Learn the letters, how Germa
       you("Mein Name ist {name}.", "Say your name.", ["Ich heiße {name}."]),
       tutor("Wie schreibt man das?", "How do you spell that?"),
       you("Ich buchstabiere: {letters}", "Spell your name letter by letter, with German letter names."),
-      tutor("Danke schön. Noch einmal, bitte. Langsam.", "Thank you. Once more, please. Slowly."),
+      tutor("Danke schön. Mein Name ist Weber.", "Thank you. My name is Weber."),
       you("Können Sie das buchstabieren?", "Now you ask him to spell his name.", ["Wie schreibt man das?"]),
       tutor("Natürlich. W wie Wasser, E, B, E, R. Weber.", "Of course. W as in Wasser, E, B, E, R. Weber."),
     ],
